@@ -10,8 +10,12 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     QWidget(parent), model(model)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    this->view = new QLCDNumber(this);
-    layout->addWidget(view);
+
+    this->view = new QLabel(this->model->weather->avgWind({0, 0}, {1, 2}).c_str());
+    this->view->setAlignment(Qt::AlignCenter);
+    this->view->setStyleSheet("font: 20pt;");
+
+    layout->addWidget(this->view);
 
     this->otherButton = new QPushButton("Update", this);
     layout->addWidget(this->otherButton);
@@ -21,7 +25,6 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
 
     setLayout(layout);
 
-    this->view->display(double(this->model->weather->avgWind({0, 0}, {1, 2})));
 
     connect(this->otherButton, SIGNAL(clicked()), this, SIGNAL(itemClicked()));
     connect(button, SIGNAL(clicked()), qApp, SLOT(quit()));
@@ -29,6 +32,5 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
 
 void MainWindow::updateItem()
 {
-    double newValue = this->model->weather->avgWind({0, 0}, {1, 2});
-    this->view->display(newValue);
+    this->view->setText(this->model->weather->avgWind({0, 0}, {1, 2}).c_str());
 }

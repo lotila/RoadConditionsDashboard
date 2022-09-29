@@ -3,6 +3,8 @@
 
 #include "util.h"
 
+#include <string>
+
 namespace models
 {
 
@@ -10,11 +12,11 @@ class Weather
 {
 public:
     Weather();
-    float avgWind(const util::Coord& coord, const util::TimeSlot& time);
+    const std::string& avgWind(const util::Coord& coord, const util::TimeSlot& time);
     void updateWeather();
 
 private:
-    float wind = 4.5;
+    std::string wind;
 };
 
 }

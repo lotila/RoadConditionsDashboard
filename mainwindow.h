@@ -15,7 +15,7 @@ public slots:
 signals:
     void itemClicked();
 private:
-    QLCDNumber *view;
+    QLabel* view;
     QPushButton *button;
     QPushButton *otherButton;
 
