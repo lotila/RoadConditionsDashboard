@@ -15,3 +15,32 @@ Link to prototype design project in Figma:
 * Use sensible branch names
 * Git is not for binary files (except some GUI images etc.)
 * Break those rules when necessary
+
+## Dependencies
+### Tools
+
+* cmake 3.16 or higher
+
+### Libs
+
+* Qt6.3
+
+## Build
+To build with cmake you should have Qt6 library path available. (QT_INSTALLATION in this example)
+
+```
+QT_INSTALLATION=~/bin/Qt/6.3.1/gcc_64/
+
+# Generate build system
+cmake -D CMAKE_PREFIX_PATH=$QT_INSTALLATION -S . -B build
+
+# build
+cd build
+make
+
+# test
+./RoadConditionsDashboard
+# or without gui
+./RoadConditionsDashboard --no-gui
+```
+
