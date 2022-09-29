@@ -22,6 +22,7 @@ set(PROJECT_SOURCES
     controller.cpp
     mainwindow.cpp
     model/weather.cpp
+    APIC/curlutil.cpp
     lib/tinyxml/tinyxml2.cpp
 )
 
