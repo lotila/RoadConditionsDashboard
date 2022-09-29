@@ -24,6 +24,7 @@ Link to prototype design project in Figma:
 ### Libs
 
 * Qt6.3
+* libcurl (tested with 7.68.0)
 * TinyXML-2 9.0
 
 ## Build
