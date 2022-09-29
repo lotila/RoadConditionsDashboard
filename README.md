@@ -24,6 +24,7 @@ Link to prototype design project in Figma:
 ### Libs
 
 * Qt6.3
+* TinyXML-2 9.0
 
 ## Build
 To build with cmake you should have Qt6 library path available. (QT_INSTALLATION in this example)

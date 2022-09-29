@@ -16,13 +16,16 @@ set(PROJECT_SOURCES
     controller.cpp
     mainwindow.cpp
     model/weather.cpp
+    lib/tinyxml/tinyxml2.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${PROJECT_SOURCES}
 )
 
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR})
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/lib
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Qt6::Widgets
