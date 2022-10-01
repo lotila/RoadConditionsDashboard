@@ -2,7 +2,7 @@
 
 A piece of software for monitoring how weather affects road maintenance and condition.
 
-Link to prototype designproject in Figma:
+Link to prototype design project in Figma:
 [PrototypeDesign](https://www.figma.com/file/A3VuGjqxbROXrJS2WUY8wV/UI-Proto-0.1)
 
 
