@@ -8,6 +8,8 @@ Link to prototype design project in Figma:
 
 ## About project
 
+The software helps users to monitor weather and road conditions in Finland. Users can study how different weather conditions affect road maintenance requirements. The software fetches data such as weather forecasts, temperature, visibility, road slippage, road traffic, and traffic cameras. The road data is fetched from Digitraffic and weather data from Ilmatieteenlaitos. The software allows users to select locations and study data in graphical format. Users can also save data for later studies.
+
 ## Version Control Guidelines
 
 * Do not commit to main branch unless it is merge from dev branch and tagged properly
