@@ -26,6 +26,7 @@ The software helps users to monitor weather and road conditions in Finland. User
 ### Libs
 
 * Qt6.3
+* libgl1-mesa-dev (needed by QtWidget)
 * libcurl (tested with 7.68.0)
 * TinyXML-2 9.0
 
@@ -34,6 +35,7 @@ To build with cmake you should have Qt6 library path available. (QT_INSTALLATION
 
 ```
 QT_INSTALLATION=~/bin/Qt/6.3.1/gcc_64/
+# or ~/bin/Qt/6.3.1/gcc_64/lib/cmake  (depends on qt installation, maybe)
 
 # Generate build system
 cmake -D CMAKE_PREFIX_PATH=$QT_INSTALLATION -S . -B build
