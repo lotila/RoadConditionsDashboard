@@ -21,7 +21,7 @@ Weather::Weather()
 
 const std::string &Weather::avgWind(const util::Coord& coord, const util::TimeSlot& time)
 {
-    return this->wind;
+    return this->wind.current;
 }
 
 void Weather::updateWeather()
@@ -45,7 +45,7 @@ void Weather::updateWeather()
 
         if(res != CURLE_OK) {
             std::cerr << "fuck: " << curl_easy_strerror(res) << std::endl;
-            this->wind = "virhes";
+            this->wind.current = "virhes";
         } else {
             tinyxml2::XMLDocument document(false);
             document.Parse(chunk.memory, chunk.size);
@@ -57,7 +57,7 @@ void Weather::updateWeather()
                                         ->LastChildElement("wml2:point")
                                         ->FirstChildElement("wml2:MeasurementTVP")
                                         ->FirstChildElement("wml2:value")->GetText();
-            this->wind = "nyt tuuloo " + dataAsText + " m/s";
+            this->wind.current = "nyt tuuloo " + dataAsText + " m/s";
         }
         curl_easy_cleanup(curl_handle);
     }
