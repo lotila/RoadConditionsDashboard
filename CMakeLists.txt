@@ -22,6 +22,9 @@ set(PROJECT_SOURCES
     controller.cpp
     mainwindow.cpp
     model/weather.cpp
+    model/maintenance.cpp
+    model/roadcondition.cpp
+    model/trafficmessages.cpp
     APIC/curlutil.cpp
     lib/tinyxml/tinyxml2.cpp
 )

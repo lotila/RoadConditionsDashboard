@@ -16,7 +16,18 @@ public:
     void updateWeather();
 
 private:
-    std::string wind;
+
+    std::string cloudiness;
+
+    struct {
+        std::string current;
+        std::string forecast;
+    } wind;
+
+    struct {
+        float current;
+        float forecast;
+    } temperature;
 };
 
 }
