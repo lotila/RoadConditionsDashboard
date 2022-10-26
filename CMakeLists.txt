@@ -26,6 +26,9 @@ set(PROJECT_SOURCES
     model/roadcondition.cpp
     model/trafficmessages.cpp
     APIC/curlutil.cpp
+    APIC/apiclient.cpp
+    parsers/digitraffigparser.cpp
+    parsers/fmiparser.cpp
     lib/tinyxml/tinyxml2.cpp
 )
 
