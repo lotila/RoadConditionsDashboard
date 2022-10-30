@@ -68,8 +68,8 @@ void CardsWidget::setPredictedCard(QString text)
     std::vector<point2d> data = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
     std::vector<point2d> data2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
 
-    this->cardChart->newPlot("esimerkki kuvaaja" ,data);
-    this->cardChart->newPlot("esimerkki kuvaaja 2" ,data2);
+    cardChart->newPlot("esimerkki kuvaaja" ,data);
+    cardChart->newPlot("esimerkki kuvaaja 2" ,data2);
 }
 
 CardsWidget::~CardsWidget()
