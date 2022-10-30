@@ -35,6 +35,7 @@ APIClient::INIT_STATUS APIClient::initializeAPIClient()
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, (void *)&chunk);
     curl_easy_setopt(handle, CURLOPT_USERAGENT, "RoadConditionsDashboard");
+    curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
 
     return INIT_STATUS::OK;
 }
