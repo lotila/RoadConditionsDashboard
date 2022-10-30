@@ -28,7 +28,8 @@ The software helps users to monitor weather and road conditions in Finland. User
 * Qt6.3
 * libgl1-mesa-dev (needed by QtWidget)
 * libcurl (tested with 7.68.0)
-* TinyXML-2 9.0
+* TinyXML-2 9.0 (in repository)
+* json from Niels Lohmann (in repository)
 
 ## Build
 To build with cmake you should have Qt6 library path available. (QT_INSTALLATION in this example)
