@@ -17,7 +17,6 @@ signals:
 
 private slots:
     void buttonClicked();
-
 private:
     Model* model;
     MainWindow* widget;

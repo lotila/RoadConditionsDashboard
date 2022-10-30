@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_AUTOMOC True)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Charts)
 find_package(CURL REQUIRED)
 
 if(NOT ${CURL_FOUND})
@@ -19,6 +20,7 @@ qt_standard_project_setup()
 
 set(PROJECT_SOURCES
     main.cpp
+    chart.cpp
     controller.cpp
     mainwindow.cpp
     model/weather.cpp
@@ -30,10 +32,20 @@ set(PROJECT_SOURCES
     parsers/digitraffigparser.cpp
     parsers/fmiparser.cpp
     lib/tinyxml/tinyxml2.cpp
+    mainwindow.ui
+    cardswidget.h
+    cardswidget.cpp
+    cardswidget.ui
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${PROJECT_SOURCES}
+)
+
+qt_add_resources(${CMAKE_PROJECT_NAME} "images"
+    PREFIX "/"
+    FILES images/visibility.png
+          images/friction.png
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
@@ -46,6 +58,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Qt6::Widgets
     Qt::Core
     CURL::libcurl
+    Qt6::Charts
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
