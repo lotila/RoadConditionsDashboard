@@ -33,7 +33,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(prevButton_, SIGNAL(clicked()), this, SLOT(updateCard()));
 
     //Initializing cards:
-    cards_ = {"Friction", "Overall road condition", "Visibility"}; //Currntly this is the DATA tells the card headers and amount of cards to be created
+    cards_ = {"Friction", "roadcondition", "Visibility",}; //Currntly this is the DATA tells the card headers and amount of cards to be created
     index_ = 0; //Setting the current card(index 0)
     cardcontainer_ = {};
     createCards();

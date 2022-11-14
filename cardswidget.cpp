@@ -65,8 +65,8 @@ void CardsWidget::setPredictedCard(QString text)
    // cardChart->XaxisLabel("esim akseli X");
     //cardChart->YaxisLabel("esim akseli Y");
 
-    std::vector<point2d> data = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
-    std::vector<point2d> data2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
+    std::vector<point2d> data = {{1,2}, {2,3}, {3,1}, {4,0},{5,2}};
+    std::vector<point2d> data2 = {{1,2}, {2,3},{3,4},{9,0},{17,4}};
 
     cardChart->newPlot("esimerkki kuvaaja" ,data);
     cardChart->newPlot("esimerkki kuvaaja 2" ,data2);

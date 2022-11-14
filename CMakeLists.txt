@@ -46,6 +46,12 @@ qt_add_resources(${CMAKE_PROJECT_NAME} "images"
     PREFIX "/"
     FILES images/visibility.png
           images/friction.png
+          images/roadcondition.png
+          images/cloud.png
+          images/snow.png
+          images/rain.png
+          images/sun.png
+          images/wind.png
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
