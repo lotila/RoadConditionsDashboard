@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>785</width>
+    <width>1009</width>
     <height>271</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>120</x>
      <y>20</y>
      <width>251</width>
      <height>221</height>
@@ -430,7 +430,7 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>480</x>
      <y>10</y>
      <width>51</width>
      <height>251</height>
@@ -666,7 +666,7 @@
   <widget class="QFrame" name="predictedFrame">
    <property name="geometry">
     <rect>
-     <x>480</x>
+     <x>640</x>
      <y>20</y>
      <width>251</width>
      <height>221</height>
@@ -692,7 +692,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,2">
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
       <property name="spacing">
        <number>2</number>
       </property>
