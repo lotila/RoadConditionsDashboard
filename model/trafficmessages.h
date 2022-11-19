@@ -1,7 +1,10 @@
 #ifndef TRAFFICMESSAGES_H
 #define TRAFFICMESSAGES_H
 
+#include "util.h"
+
 #include <string>
+#include <vector>
 
 namespace models
 {
@@ -10,20 +13,13 @@ class TrafficMessages
 {
 public:
     TrafficMessages();
-    void updateTrafficMessages();
+
+    void updateTrafficMessageCount(const util::Coord& coord, const util::TimeSlot& timeSlot);
+
+    std::vector<util::TimeValuePair> getTrafficMessageCount();
 
 private:
-    // Jos vaan määrä, niin näitä ei tarvita
-    int id;
-    std::string type;
-
-    // Miltä alueelta tm:iä otetaan
-    struct {
-        int xMin;
-        int yMin;
-        int xMax;
-        int yMax;
-    } boundingBox;
+    std::vector<util::TimeValuePair> data;
 };
 
 }
