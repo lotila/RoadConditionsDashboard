@@ -1,7 +1,6 @@
 #include "weather.h"
 
 #include "APIC/apiclient.h"
-#include "parsers/digitraffigparser.h"
 #include "parsers/fmiparser.h"
 #include "util.h"
 
@@ -28,14 +27,6 @@ void Weather::updateWeather()
     std::string apiResponse;
     APIClient::getFMIAPIData(&apiResponse, query);
     this->wind.current = FMIParser::wind(apiResponse);
-
-    // below there is example usage of digitraffic api function
-    std::string path = "traffic-message/v1/messages";
-    query = "inactiveHours=0&includeAreaGeometry=false&situationType=TRAFFIC_ANNOUNCEMENT";
-
-    apiResponse.clear();
-    APIClient::getDigitrafficAPIData(&apiResponse, path, query);
-    // std:: cout << digitraffigParser::example(apiResponse) << std::endl;
 }
 
 }

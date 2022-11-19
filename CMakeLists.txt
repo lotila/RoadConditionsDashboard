@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_AUTOMOC True)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Charts)
 find_package(CURL REQUIRED)
 
@@ -20,6 +19,7 @@ qt_standard_project_setup()
 
 set(PROJECT_SOURCES
     main.cpp
+    util.cpp
     chart.cpp
     controller.cpp
     mainwindow.cpp
@@ -70,3 +70,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
+
+add_subdirectory(tests)
