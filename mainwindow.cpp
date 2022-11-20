@@ -11,31 +11,30 @@
 MainWindow::MainWindow(Model* model, QWidget* parent) :
     QWidget(parent), model(model)
 {
-    Ui::Form ui; //Initializing UI from ui_mainwindow.h
-    ui.setupUi(this); //Setting the ui
+    this->ui.setupUi(this); //Setting the ui
 
     //Initializing the Stackedwidget for MainWindow:
-    stackWidget = ui.stackedWidget;
-    cardStackWidget = ui.stackedWidget_2;
+    this->stackWidget = ui.stackedWidget;
+    this->cardStackWidget = ui.stackedWidget_2;
     //Initializing the *page variables for MainWindow:
-    mainpage = ui.mainPage;
-    roadpage = ui.roadPage;
-    weatherpage = ui.weatherPage;
+    this->mainpage = ui.mainPage;
+    this->roadpage = ui.roadPage;
+    this->weatherpage = ui.weatherPage;
     //Setting up the page to mainpage
     ui.stackedWidget->setCurrentWidget(mainpage);
 //RoadFrame:
     //Initializing the Buttons for road Preview:
-    nextButton_ = ui.nextButton_road;
-    prevButton_ = ui.prevButton_road;
+    this->nextButton_ = ui.nextButton_road;
+    this->prevButton_ = ui.prevButton_road;
 
     //Connecting the prev and next buttons with updatefunction:
     connect(nextButton_, SIGNAL(clicked()), SLOT(updateCard()));
     connect(prevButton_, SIGNAL(clicked()), this, SLOT(updateCard()));
 
     //Initializing cards:
-    cards_ = {"Friction", "roadcondition", "Visibility",}; //Currntly this is the DATA tells the card headers and amount of cards to be created
-    index_ = 0; //Setting the current card(index 0)
-    cardcontainer_ = {};
+    this->cards_ = {"Friction", "roadcondition", "Visibility",}; //Currntly this is the DATA tells the card headers and amount of cards to be created
+    this->index_ = 0; //Setting the current card(index 0)
+    this->cardcontainer_ = {};
     createCards();
 
     //this->cardStackWidget->setCurrentIndex(index_);
@@ -57,25 +56,34 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     ui.moreButton_weather->raise();
 
 //RoadPage:
-    chart* cardChart = new chart("esimerkki kaavio", ui.roadChartWidget);
+   this->roadDataChart = new chart("esimerkki kaavio", ui.roadChartWidget);
    // cardChart->XaxisLabel("esim akseli X");
-    //cardChart->YaxisLabel("esim akseli Y");
+   //cardChart->YaxisLabel("esim akseli Y");
 
+    //This is data to feed the advanced Roadchart. This should come from thee model in the future:
     std::vector<point2d> data = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
     std::vector<point2d> data2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
+    //Plotting the wanted data:
+    this->roadDataChart->newPlot("esimerkki kuvaaja" ,data);
+    this->roadDataChart->newPlot("esimerkki kuvaaja 2" ,data2);
+    //Initialize chart setting elements:
+    this->timeLineSlider = this->ui.timeLineSlider;
+    this->timeLineLabel = this->ui.timeLineSelected;
+    this->timeLineSlider->setRange(-12, 12);
 
-    cardChart->newPlot("esimerkki kuvaaja" ,data);
-    cardChart->newPlot("esimerkki kuvaaja 2" ,data2);
+    this->timeLineLabel->setText("0");
+    //update the Timeline position actively
+    connect(this->timeLineSlider, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabel(int)));
+    //Update model when timeline is selected(handle is released):
+    connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForRoadData()));
+//WeatherPage:
 
-//Connections for Buttons in GUI:
+//Button Connections:
     connect(this->otherButton, SIGNAL(clicked()), this, SIGNAL(itemClicked()));
     connect(ui.moreButton_road, SIGNAL(clicked()), this, SLOT(switchToRoadPage()));
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));
     connect(ui.homeButton_road, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
     connect(ui.homeButton_weather, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
-
-
-
 }
 void MainWindow::updateItem()
 {
@@ -90,8 +98,6 @@ void MainWindow::createCards()
         this->cardStackWidget->addWidget(createdCard);
     }
 }
-
-//Updating the index of a card currently shown to you
 void MainWindow::updateCard()
 {
     //Check the sender:
@@ -121,6 +127,7 @@ void MainWindow::updateCard()
     }
     this->cardStackWidget->setCurrentWidget(cardcontainer_.at(index_));
 }
+
 void MainWindow::switchToRoadPage()
 {
     this->stackWidget->setCurrentWidget(this->roadpage);
@@ -132,4 +139,19 @@ void MainWindow::switchToMainPage()
 void MainWindow::switchToWeatherPage()
 {
     this->stackWidget->setCurrentWidget(this->weatherpage);
+}
+void MainWindow::updateRoadDataChart()
+{ //Here we should get the data from model and give it to our chart from those variables that are selected:
+
+}
+void MainWindow::updateTimeLineLabel(int newValue)
+{
+    QString timeLineText = QString::number(newValue);
+    this->timeLineLabel->setText(timeLineText);
+}
+
+void MainWindow::sendUpdateRequestForRoadData()
+{
+    int timePos = this->timeLineSlider->sliderPosition();
+    emit this->updateRoadData(timePos);
 }
