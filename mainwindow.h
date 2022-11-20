@@ -3,8 +3,9 @@
 
 #include "model.h"
 #include "ui_mainwindow.h"
-
+#include "chart.h"
 #include <QtWidgets>
+#include <QSlider>
 
 class MainWindow : public QWidget
 {
@@ -19,34 +20,43 @@ public slots:
     void switchToWeatherPage();
     void createCards();
     void updateCard();
+
+    void updateRoadDataChart();
+    void updateTimeLineLabel(int);
+    void sendUpdateRequestForRoadData();
 signals:
     void itemClicked();
-
+    void updateRoadData(int);
 private:
-    //WeatherPreview elements:
-    QLabel* view;
-    QPushButton *button;
-    QPushButton *otherButton;
-    //model:
+//Model:
     Model* model;
-    //Ui:
+//Ui:
     Ui::Form ui;
-    //Pages and stackedwidget:
+//Pages and stackedwidget:
     QWidget* mainpage;
     QWidget* roadpage;
     QWidget* weatherpage;
     QStackedWidget* stackWidget;
     QStackedWidget* cardStackWidget;
+//WeatherPreview elements:
+    QLabel* view;
+    QPushButton *button;
+    QPushButton *otherButton;
 
-    //RoadPreview Card variables:
-    std::vector<QString> cards_;
-    std::vector<CardsWidget*>  cardcontainer_;
-    int index_;
-    QLabel* now_;
-    QLabel* predicted_;
-
+//RoadPreview elements:
     QPushButton* prevButton_;
     QPushButton* nextButton_;
+    //RoadPreview card elements:
+        std::vector<QString> cards_;
+        std::vector<CardsWidget*>  cardcontainer_;
+        int index_;
+
+//RoadPage elements:
+        chart* roadDataChart;
+        //Settings:
+            QSlider* timeLineSlider;
+            QLabel* timeLineLabel;
+
 
 };
 
