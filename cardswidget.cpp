@@ -1,7 +1,7 @@
 #include "cardswidget.h"
 #include "ui_cardswidget.h"
 #include <iostream>
-#include "chart.h"
+#include "linechart.h"
 
 CardsWidget::CardsWidget(QWidget *parent) :
     QFrame(parent)
@@ -61,10 +61,7 @@ void CardsWidget::setIcon(QPixmap m)
 void CardsWidget::setPredictedCard(QString text)
 {
     this->predictedLabel_->setText(text+" Predicted");
-    chart* cardChart = new chart("esimerkki kaavio", chartWidget_);
-   // cardChart->XaxisLabel("esim akseli X");
-    //cardChart->YaxisLabel("esim akseli Y");
-
+    LineChart* cardChart = new LineChart("esimerkki kaavio", chartWidget_);
     std::vector<point2d> data = {{1,2}, {2,3}, {3,1}, {4,0},{5,2}};
     std::vector<point2d> data2 = {{1,2}, {2,3},{3,4},{9,0},{17,4}};
 
