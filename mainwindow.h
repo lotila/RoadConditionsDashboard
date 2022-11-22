@@ -2,6 +2,7 @@
 #define CUSTOMWIDGET_H
 
 #include "model.h"
+#include "searchbar.h"
 #include "ui_mainwindow.h"
 #include "chart.h"
 #include <QtWidgets>
@@ -58,6 +59,9 @@ private:
             QLabel* timeLineLabel;
 
 
+    // Search bar
+    QWidget* searchBar;
+    SearchBar* sb_;
 };
 
 #endif

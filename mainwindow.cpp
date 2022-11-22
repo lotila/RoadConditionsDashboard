@@ -2,7 +2,9 @@
 #include "chart.h"
 #include "model.h"
 #include "cardswidget.h"
+#include "searchbar.h"
 #include "ui_mainwindow.h"
+
 #include <QtWidgets>
 #include <iostream>
 #include <string>
@@ -13,6 +15,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
 {
     this->ui.setupUi(this); //Setting the ui
 
+
     //Initializing the Stackedwidget for MainWindow:
     this->stackWidget = ui.stackedWidget;
     this->cardStackWidget = ui.stackedWidget_2;
@@ -22,6 +25,11 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     this->weatherpage = ui.weatherPage;
     //Setting up the page to mainpage
     ui.stackedWidget->setCurrentWidget(mainpage);
+
+    // Setting up the search bar
+    searchBar = ui.searchWidgetMain;
+    sb_ = new SearchBar(searchBar);
+
 //RoadFrame:
     //Initializing the Buttons for road Preview:
     this->nextButton_ = ui.nextButton_road;
@@ -94,12 +102,14 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(ui.moreButton_road, SIGNAL(clicked()), this, SLOT(switchToRoadPage()));
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));
     connect(ui.homeButton_road, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
-    connect(ui.homeButton_weather, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
+
 }
+
 void MainWindow::updateItem()
 {
     this->view->setText(this->model->weather->avgWind({0, 0}, {1, 2}).c_str());
 }
+
 void MainWindow::createCards()
 {
     for(int i = 0; i < cards_.size(); i++)
@@ -143,10 +153,12 @@ void MainWindow::switchToRoadPage()
 {
     this->stackWidget->setCurrentWidget(this->roadpage);
 }
+
 void MainWindow::switchToMainPage()
 {
     this->stackWidget->setCurrentWidget(this->mainpage);
 }
+
 void MainWindow::switchToWeatherPage()
 {
     this->stackWidget->setCurrentWidget(this->weatherpage);
