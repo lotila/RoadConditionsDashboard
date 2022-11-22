@@ -36,6 +36,9 @@ set(PROJECT_SOURCES
     cardswidget.h
     cardswidget.cpp
     cardswidget.ui
+    searchbar.h
+    searchbar.cpp
+    searchBar.ui
 )
 
 add_executable(${CMAKE_PROJECT_NAME}
