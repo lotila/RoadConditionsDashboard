@@ -4,7 +4,7 @@
 #include "model.h"
 #include "searchbar.h"
 #include "ui_mainwindow.h"
-#include "chart.h"
+#include "linechart.h"
 #include <QtWidgets>
 #include <QSlider>
 
@@ -53,7 +53,7 @@ private:
         int index_;
 
 //RoadPage elements:
-        chart* roadDataChart;
+        LineChart* roadDataChart;
         //Settings:
             QSlider* timeLineSlider;
             QLabel* timeLineLabel;

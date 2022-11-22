@@ -1,5 +1,6 @@
 #include "mainwindow.h"
-#include "chart.h"
+#include "linechart.h"
+#include "pieChart.h"
 #include "model.h"
 #include "cardswidget.h"
 #include "searchbar.h"
@@ -9,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <qwidget.h>
+#include <unordered_map>
 
 MainWindow::MainWindow(Model* model, QWidget* parent) :
     QWidget(parent), model(model)
@@ -64,10 +66,14 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     ui.moreButton_weather->raise();
 
 //RoadPage:
-   this->roadDataChart = new chart("esimerkki kaavio", ui.roadChartWidget);
-   // cardChart->XaxisLabel("esim akseli X");
-   //cardChart->YaxisLabel("esim akseli Y");
+   this->roadDataChart = new LineChart("esimerkki kaavio", ui.roadChartWidget);
+/*
+    std::unordered_map<QString,int> pieData = {{"kakku",1 }, {"pala",2}, {"keitto",5}};
+    PieChart* cardChart = new PieChart("esimerkki kaavio", ui.roadChartWidget, pieData);
+*/
 
+
+//Connections for ButBtons in GUI:
     //This is data to feed the advanced Roadchart. This should come from thee model in the future:
     std::vector<point2d> data = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
     std::vector<point2d> data2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
@@ -86,18 +92,8 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForRoadData()));
 //WeatherPage:
 
-    chart* weatherChart = new chart("esimerkki kaavio", ui.weatherChart);
-   // cardChart->XaxisLabel("esim akseli X");
-    //cardChart->YaxisLabel("esim akseli Y");
-
-    std::vector<point2d> weatherData = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
-    std::vector<point2d> weatherData2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
-
-    weatherChart->newPlot("esimerkki kuvaaja" ,weatherData);
-    weatherChart->newPlot("esimerkki kuvaaja 2" ,weatherData2);
 
 //Connections for Buttons in GUI:
-
     connect(this->otherButton, SIGNAL(clicked()), this, SIGNAL(itemClicked()));
     connect(ui.moreButton_road, SIGNAL(clicked()), this, SLOT(switchToRoadPage()));
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));

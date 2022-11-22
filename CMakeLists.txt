@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
     main.cpp
     util.cpp
     chart.cpp
+    piechart.cpp
+    linechart.cpp
     controller.cpp
     mainwindow.cpp
     model/weather.cpp
