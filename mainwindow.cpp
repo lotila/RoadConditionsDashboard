@@ -78,7 +78,18 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForRoadData()));
 //WeatherPage:
 
-//Button Connections:
+    chart* weatherChart = new chart("esimerkki kaavio", ui.weatherChart);
+   // cardChart->XaxisLabel("esim akseli X");
+    //cardChart->YaxisLabel("esim akseli Y");
+
+    std::vector<point2d> weatherData = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
+    std::vector<point2d> weatherData2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
+
+    weatherChart->newPlot("esimerkki kuvaaja" ,weatherData);
+    weatherChart->newPlot("esimerkki kuvaaja 2" ,weatherData2);
+
+//Connections for Buttons in GUI:
+
     connect(this->otherButton, SIGNAL(clicked()), this, SIGNAL(itemClicked()));
     connect(ui.moreButton_road, SIGNAL(clicked()), this, SLOT(switchToRoadPage()));
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));
