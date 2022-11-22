@@ -24,7 +24,7 @@ bool listIsNearToPoint(const nlohmann::json& list, const util::Coord& point)
                 });
 
 
-    return  (distanceToStart < util::NEAR || distanceToEnd <  util::NEAR);
+    return  (distanceToStart < util::NEARINDEGREES || distanceToEnd <  util::NEARINDEGREES);
 }
 
 /**
@@ -92,7 +92,7 @@ std::vector<util::TimeValuePair> digitraffigParser::parseTrafficMessageCount(
                                 geometry.at("coordinates").at(0)
                             });
 
-                if (distance < util::NEAR)
+                if (distance < util::NEARINDEGREES)
                 {
                     ++count;
                 }

@@ -6,7 +6,7 @@
 
 namespace util {
 
-const float NEAR = 0.5;  // in degrees
+const float NEARINDEGREES = 0.5;
 
 class Coord
 {
