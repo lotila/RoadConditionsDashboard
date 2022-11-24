@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "linechart.h"
-#include "pieChart.h"
 #include "model.h"
 #include "cardswidget.h"
 #include "searchbar.h"
