@@ -42,7 +42,7 @@ background-color: rgb(255, 255, 255);</string>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="mainPage">
     <widget class="QWidget" name="weatherWidget" native="true">
@@ -2797,22 +2797,43 @@ background-color: rgb(255, 255, 255);</string>
            <rect>
             <x>20</x>
             <y>580</y>
-            <width>362</width>
+            <width>580</width>
             <height>31</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QCheckBox" name="weatherCheckbox">
+            <widget class="QCheckBox" name="temperatureCheckbox">
              <property name="text">
-              <string>Weather</string>
+              <string>Temperature</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="roadCheckbox">
+            <widget class="QCheckBox" name="windCheckbox">
              <property name="text">
-              <string>Road Condition</string>
+              <string>Wind</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="cloudinessCheckbox">
+             <property name="text">
+              <string>Cloudiness</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="rainCheckbox">
+             <property name="text">
+              <string>Rain</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="frictionCheckbox">
+             <property name="text">
+              <string>Friction</string>
              </property>
             </widget>
            </item>
