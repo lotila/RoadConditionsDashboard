@@ -24,6 +24,7 @@ public slots:
 
     void updateRoadDataChart();
     void updateTimeLineLabel(int);
+    void updateTimeLineLabelWP(int);
     void sendUpdateRequestForRoadData();
 signals:
     void itemClicked();
@@ -53,13 +54,26 @@ private:
         int index_;
 
 //RoadPage elements:
-        LineChart* roadDataChart;
-        //Settings:
-            QSlider* timeLineSlider;
-            QLabel* timeLineLabel;
+     LineChart* roadDataChart;
+     //Settings:
+        QSlider* timeLineSlider;
+        QLabel* timeLineLabel;
+        QCheckBox* temperatureSelectionRP;
+        QCheckBox* windSelectionRP;
+        QCheckBox* cloudSelectionRP;
+        QCheckBox* rainSelectionRP;
+        QCheckBox* frictionSelectionRP;
+        QCheckBox* trafficSelectionRP;
 
 
-    // Search bar
+//WeatherPage elements:
+        //Settings
+        QSlider* timeLineSliderWP;
+        QLabel* timeLineLabelWP;
+
+
+
+// Search bar
     QWidget* searchBar;
     SearchBar* sb_;
 };

@@ -66,30 +66,58 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
 
 //RoadPage:
    this->roadDataChart = new LineChart("esimerkki kaavio", ui.roadChartWidget);
-/*
+    /*
     std::unordered_map<QString,int> pieData = {{"kakku",1 }, {"pala",2}, {"keitto",5}};
     PieChart* cardChart = new PieChart("esimerkki kaavio", ui.roadChartWidget, pieData);
-*/
-
-
-//Connections for ButBtons in GUI:
+    */
     //This is data to feed the advanced Roadchart. This should come from thee model in the future:
     std::vector<point2d> data = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
     std::vector<point2d> data2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
     //Plotting the wanted data:
     this->roadDataChart->newPlot("esimerkki kuvaaja" ,data);
     this->roadDataChart->newPlot("esimerkki kuvaaja 2" ,data2);
-    //Initialize chart setting elements:
-    this->timeLineSlider = this->ui.timeLineSlider;
-    this->timeLineLabel = this->ui.timeLineSelected;
-    this->timeLineSlider->setRange(-12, 12);
 
+    //Initialize chart setting elements:
+
+    this->timeLineSlider = this->ui.timeLineSlider; //Timeline slider
+    this->timeLineLabel = this->ui.timeLineSelected; //Timeline value label
+    this->timeLineSlider->setRange(-12, 12);
     this->timeLineLabel->setText("0");
-    //update the Timeline position actively
+
+    this->temperatureSelectionRP = this->ui.temperatureCheckboxRoadPage;
+    this->windSelectionRP = this->ui.windCheckboxRoadPage;
+    this->cloudSelectionRP = this->ui.cloudinessCheckboxRoadPage;
+    this->rainSelectionRP = this->ui.rainCheckboxRoadPage;
+    this->frictionSelectionRP = this->ui.frictionCheckboxRoadPage;
+    this->trafficSelectionRP = this->ui.trafficMsgCheckboxRoadPage;
+
+    //Signals and slots:
+    //update the Timeline value actively
     connect(this->timeLineSlider, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabel(int)));
     //Update model when timeline is selected(handle is released):
     connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForRoadData()));
+    //Show/unshow data:
+    /*TODO: These Slots would call the roadDatachartmethods which would show and unshow subplots of the roadDataChart
+            roadDataChart would therefore allways have the subplots: temp, wind, cloud, rain, friction, traffic
+            When constructed these are formed naturally from the model and in default they would be hidden
+            When the value of timeline changes we would update the model and therefore once updated draw the subplots again
+    */
+    connect(this->temperatureSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
+    connect(this->windSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
+    connect(this->cloudSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
+    connect(this->rainSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
+    connect(this->frictionSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
+    connect(this->trafficSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
+
 //WeatherPage:
+    this->timeLineSliderWP = this->ui.timeLineSliderWP; //Timeline slider
+    this->timeLineLabelWP = this->ui.timeLineSelectedWP; //Timeline value label
+    this->timeLineSliderWP->setRange(-12, 12);
+    this->timeLineLabelWP->setText("0");
+
+    connect(this->timeLineSliderWP, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabelWP(int)));
+    //Update model when timeline is selected(handle is released):
+    connect(this->timeLineSliderWP, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestFoRoadData()));
 
 
 //Connections for Buttons in GUI:
@@ -167,7 +195,11 @@ void MainWindow::updateTimeLineLabel(int newValue)
     QString timeLineText = QString::number(newValue);
     this->timeLineLabel->setText(timeLineText);
 }
-
+void MainWindow::updateTimeLineLabelWP(int newValue)
+{
+    QString timeLineText = QString::number(newValue);
+    this->timeLineLabelWP->setText(timeLineText);
+}
 void MainWindow::sendUpdateRequestForRoadData()
 {
     int timePos = this->timeLineSlider->sliderPosition();

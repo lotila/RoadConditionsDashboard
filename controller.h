@@ -15,10 +15,12 @@ public:
 signals:
     void buttonClickFinished();
     void updateRoadDataModelFinished();
+    void updateWeatherDataModelFinished();
 
 private slots:
     void buttonClicked();
     void updateRoadDataModel(int);
+    void updateWeatherDataModel(int);
 private:
     Model* model;
     MainWindow* widget;
