@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <stdexcept>
+#include <vector>
 
 namespace util {
 
@@ -32,6 +33,8 @@ struct TimeValuePair
     int time;  // in hours from present
     float value;
 };
+
+using TimeSeries = std::vector<util::TimeValuePair>;
 
 }
 

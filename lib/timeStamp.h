@@ -1,5 +1,5 @@
-#ifndef DATESTAMP_H
-#define DATESTAMP_H
+#ifndef TIMESTAMP_H
+#define TIMESTAMP_H
 
 #include <chrono>
 #include <iomanip>
@@ -9,10 +9,8 @@
  * Stolen from internet and then edited:
  *      https://techoverflow.net/2018/03/30/iso8601-utc-time-as-stdstring-using-c11-chrono/
  */
-std::string isoDateHoursFromNow(int hours)
+inline std::string isoDateHoursFromNow(int hours)
 {
-    using namespace std::chrono_literals;
-
     auto now = std::chrono::system_clock::now();
     auto then = now + std::chrono::hours(hours);
     auto itt = std::chrono::system_clock::to_time_t(then);
