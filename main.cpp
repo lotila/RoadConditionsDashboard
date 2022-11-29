@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     if (argc > 1 && std::strcmp(argv[1], "--no-gui") == 0)
     {
         std::cout << "wind is blowing like: "
-                  << model.weather->avgWind({0, 0}, {1, 2})
+                  << model.weather->getCurrentWind()
                   << std::endl;
         APIClient::destructAPIClient();
         return EXIT_SUCCESS;

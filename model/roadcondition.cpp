@@ -26,18 +26,22 @@ float RoadCondition::getCurrentFriction() const
 {
     return this->friction.front().value;
 }
+
 util::TimeSeries RoadCondition::getRoadcondition() const
 {
     return this->roadcondition;
 }
+
 float RoadCondition::getCurrentRoadcondition() const
 {
     return this->roadcondition.front().value;
 }
+
 util::TimeSeries RoadCondition::getVisibility() const
 {
     return this->visibility;
 }
+
 float RoadCondition::getCurrentVisibility() const
 {
     return this->visibility.front().value;

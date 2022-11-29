@@ -21,7 +21,7 @@ const std::unordered_map<Weather::WEATHER_PARAMETER, std::string> Weather::weath
 
 Weather::Weather()
 {
-    this->updateWeather();
+
 
 
     // test data
@@ -30,7 +30,6 @@ Weather::Weather()
     rain.push_back({1,10});rain.push_back({2,10});
     temperature.push_back({1,5});temperature.push_back({2,5});
     cloudiness.push_back({1,4});cloudiness.push_back({2,4});
-    //this->updateTemperature(util::Coord(5,5), {0,1});
     this->averageTemp = 5;
     this->maxTemp = 5;
     this->minTemp = 5;
@@ -195,19 +194,5 @@ float Weather::getCurrentCloudiness() const
     return this->cloudiness.front().value;
 }
 
-
-
-const std::string &Weather::avgWind(const util::Coord& coord, const util::TimeSlot& time)
-{
-    return this->currentWindTest;
-}
-
-void Weather::updateWeather()
-{
-    std::string query = "service=WFS&version=2.0.0&request=getFeature&storedquery_id=livi::observations::road::default::timevaluepair&place=hervanta&parameters=windspeedms&";
-    std::string apiResponse;
-    APIClient::getFMIAPIData(&apiResponse, query);
-    this->currentWindTest = FMIParser::wind(apiResponse);
-}
 
 }

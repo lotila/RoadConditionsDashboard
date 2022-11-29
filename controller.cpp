@@ -16,7 +16,7 @@ Controller::Controller(Model *model, MainWindow* widget, QObject *parent)
 
 void Controller::buttonClicked()
 {
-    this->model->weather->updateWeather();
+    //this->model->weather->updateWind({0, 0}, {1, 2});// test location
     emit this->buttonClickFinished();
 }
 void Controller::updateRoadDataModel(int timeValue)
@@ -29,7 +29,7 @@ void Controller::updateRoadDataModel(int timeValue)
     formTimeSlot(timeValue);
     std::cout << "going to update model" << std::endl;
 //TODO: Add the Model Updatefunctions here when they are ready or defined:
-    this->model->weather->updateWeather();
+    //this->model->weather->updateWind({0, 0}, {1, 2}); // test location
 
 //Send signal when update done:
     emit this->updateRoadDataModelFinished();

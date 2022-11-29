@@ -53,7 +53,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     QFrame *weatherFrame = ui.weather_frame;
     //Adding the old stuff to the weather frame:
     QVBoxLayout *layout = new QVBoxLayout(this);
-    this->view = new QLabel(this->model->weather->avgWind({0, 0}, {1, 2}).c_str());
+    this->view = new QLabel(QString::number(this->model->weather->getCurrentWind()));
     this->view->setAlignment(Qt::AlignCenter);
     this->view->setStyleSheet("font: 20pt;");
     layout->addWidget(this->view);
@@ -114,7 +114,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
 
 void MainWindow::updateItem()
 {
-    this->view->setText(this->model->weather->avgWind({0, 0}, {1, 2}).c_str());
+    this->view->setText(QString::number(this->model->weather->getCurrentWind()));
 }
 
 void MainWindow::createCards()

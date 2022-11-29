@@ -35,10 +35,6 @@ public:
     util::TimeSeries getCloudiness() const;
     float getCurrentCloudiness() const;
 
-    // old exmples
-    const std::string& avgWind(const util::Coord& coord, const util::TimeSlot& time);
-    void updateWeather();
-
 private:
 
 

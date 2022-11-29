@@ -30,29 +30,6 @@ private:
 
     util::TimeSeries visibility;
 
-
-    //int id;
-
-    //CONDITION_TYPE type = CONDITION_TYPE::FORECAST;
-
-    //std::string precipitation;
-    //std::string visibility;
-    //std::string friction;
-    //std::string overallRoadCondition;
-
-    //bool slippery;
-    //bool freezingRain;
-    //bool daylight;
-
-    //struct {
-    //    std::string air;
-    //    std::string road;
-    //} temperature;
-
-    //struct {
-    //    float speed;
-    //    int direction;
-    //} wind;
 };
 
 }

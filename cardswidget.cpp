@@ -63,27 +63,27 @@ void CardsWidget::setPredictedCard()
 
 void CardsWidget::updateCardInfo()
 {
-    float val = 0;
+    float value = 0;
     this->cardChart->deletePlots();
     if (this->text == "Friction")
     {
         this->cardChart->newPlot("" ,model->roadCondition->getFriction());
-        val = model->roadCondition->getCurrentFriction();
+        value = model->roadCondition->getCurrentFriction();
     }
     else if (this->text == "Roadcondition")
     {
         this->cardChart->newPlot("" ,model->roadCondition->getRoadcondition());
-        val = model->roadCondition->getCurrentRoadcondition();
+        value = model->roadCondition->getCurrentRoadcondition();
     }
     else if (this->text == "Visibility")
     {
         this->cardChart->newPlot("" ,model->roadCondition->getVisibility());
-        val = model->roadCondition->getCurrentVisibility();
+        value = model->roadCondition->getCurrentVisibility();
     }
 
-    QString value = QString::number(val); //Change the val to Qstring
+    QString StringValue = QString::number(value); //Change the val to Qstring
     this->nowLabel_->setText(this->text + " Now"); //Set header for the Now card
-    this->nowValueLabel_->setText(value + "%"); //Set the value of the card
+    this->nowValueLabel_->setText(StringValue + "%"); //Set the value of the card
 }
 
 CardsWidget::~CardsWidget()
