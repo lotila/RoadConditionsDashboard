@@ -9,12 +9,12 @@ Chart::Chart(QString &title, QWidget* layoutWidget)
 }
 
 
-QLineSeries* Chart::vectorToQLineSeries(std::vector<point2d>& points)
+QLineSeries* Chart::vectorToQLineSeries(std::vector<util::TimeValuePair>& points)
 {
     QLineSeries* series = new QLineSeries();
-    for (point2d& point : points)
+    for (util::TimeValuePair& point : points)
     {
-        series->append(point.x, point.y);
+        series->append(point.time, point.value);
     }
     return series;
 }

@@ -2,6 +2,9 @@
 #define MAINTENANCE_H
 
 #include <string>
+#include <unordered_map>
+
+
 
 namespace models
 {
@@ -12,19 +15,24 @@ public:
     Maintenance();
     void updateMaintenance();
 
-private:
-    int id;
-    std::string heading;
-    std::string description;
-    std::string startTime;
-    std::string endtime;
+    std::unordered_map<std::string, int> getMaintanance();
 
-    struct {
-        int xMin;
-        int yMin;
-        int xMax;
-        int yMax;
-    } boundingBox;
+private:
+
+
+    std::unordered_map<std::string,int> pieData;
+    //int id;
+    //std::string heading;
+    //std::string description;
+    //std::string startTime;
+    //std::string endtime;
+
+    //struct {
+    //    int xMin;
+    //    int yMin;
+    //    int xMax;
+    //    int yMax;
+    //} boundingBox;
 };
 
 }

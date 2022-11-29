@@ -34,6 +34,7 @@
 #include "chart.h"
 
 
+
 class LineChart : public Chart
 {
 public:
@@ -61,7 +62,7 @@ public:
      * @param name
      * @param vector of plot points
      */
-    void newPlot(QString name, std::vector<point2d>& points );
+    void newPlot(QString name, std::vector<util::TimeValuePair> points );
 
     void hide() const;
     void show() const;

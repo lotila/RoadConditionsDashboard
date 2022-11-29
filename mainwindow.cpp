@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "linechart.h"
 #include "model.h"
 #include "cardswidget.h"
 #include "searchbar.h"
@@ -41,7 +40,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(prevButton_, SIGNAL(clicked()), this, SLOT(updateCard()));
 
     //Initializing cards:
-    this->cards_ = {"Friction", "roadcondition", "Visibility",}; //Currntly this is the DATA tells the card headers and amount of cards to be created
+    this->cards_ = {"Friction", "Roadcondition", "Visibility",}; //Currntly this is the DATA tells the card headers and amount of cards to be created
     this->index_ = 0; //Setting the current card(index 0)
     this->cardcontainer_ = {};
     createCards();
@@ -65,20 +64,20 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     ui.moreButton_weather->raise();
 
 //RoadPage:
-   this->roadDataChart = new LineChart("esimerkki kaavio", ui.roadChartWidget);
-/*
-    std::unordered_map<QString,int> pieData = {{"kakku",1 }, {"pala",2}, {"keitto",5}};
-    PieChart* cardChart = new PieChart("esimerkki kaavio", ui.roadChartWidget, pieData);
-*/
+    this->roadDataChart = new LineChart("", ui.roadChartWidget);
+    updateRoadDataChart();
+
+    connect(this->ui.trafficMsgCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.cloudinessCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.rainCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.temperatureCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.frictionCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.windCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
 
 
 //Connections for ButBtons in GUI:
-    //This is data to feed the advanced Roadchart. This should come from thee model in the future:
-    std::vector<point2d> data = {point2d(1,2), point2d(2,3),point2d(3,1),point2d(4,0),point2d(5,2)};
-    std::vector<point2d> data2 = {point2d(1,2), point2d(2,3),point2d(3,4),point2d(9,0),point2d(17,4)};
-    //Plotting the wanted data:
-    this->roadDataChart->newPlot("esimerkki kuvaaja" ,data);
-    this->roadDataChart->newPlot("esimerkki kuvaaja 2" ,data2);
+
+
     //Initialize chart setting elements:
     this->timeLineSlider = this->ui.timeLineSlider;
     this->timeLineLabel = this->ui.timeLineSelected;
@@ -89,7 +88,16 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(this->timeLineSlider, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabel(int)));
     //Update model when timeline is selected(handle is released):
     connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForRoadData()));
+
+    connect(this->ui.checkBox, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
+    connect(this->ui.checkBox_2, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
+    connect(this->ui.checkBox_3, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
+
+
 //WeatherPage:
+    this->weatherChart = new LineChart("", ui.weatherChart);
+    //Plotting the wanted data:
+    updateWeatherData();
 
 
 //Connections for Buttons in GUI:
@@ -97,6 +105,10 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(ui.moreButton_road, SIGNAL(clicked()), this, SLOT(switchToRoadPage()));
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));
     connect(ui.homeButton_road, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
+
+
+// maintanance work
+    this->pieChart = new PieChart("", this->ui.maintananceWorkPie, this->model->maintenance->getMaintanance());
 
 }
 
@@ -109,7 +121,7 @@ void MainWindow::createCards()
 {
     for(int i = 0; i < cards_.size(); i++)
     {
-        CardsWidget* createdCard = new CardsWidget(cards_.at(i), 80); //Creating cards with Variable name and int value
+        CardsWidget* createdCard = new CardsWidget(cards_.at(i), this->model); //Creating cards with Variable name and int value
         this->cardcontainer_.push_back(createdCard);
         this->cardStackWidget->addWidget(createdCard);
     }
@@ -144,6 +156,15 @@ void MainWindow::updateCard()
     this->cardStackWidget->setCurrentWidget(cardcontainer_.at(index_));
 }
 
+
+void MainWindow::updateCardInfo()
+{
+    for ( CardsWidget* card :  this->cardcontainer_)
+    {
+        card->updateCardInfo();
+    }
+}
+
 void MainWindow::switchToRoadPage()
 {
     this->stackWidget->setCurrentWidget(this->roadpage);
@@ -159,9 +180,43 @@ void MainWindow::switchToWeatherPage()
     this->stackWidget->setCurrentWidget(this->weatherpage);
 }
 void MainWindow::updateRoadDataChart()
-{ //Here we should get the data from model and give it to our chart from those variables that are selected:
+{
+    this->roadDataChart->deletePlots();
+    if (ui.windCheckbox->isChecked()) this->roadDataChart->newPlot("wind" ,model->weather->getWind());
+    if (ui.temperatureCheckbox->isChecked()) this->roadDataChart->newPlot("temperature" ,model->weather->getTemperature());
+    if (ui.rainCheckbox->isChecked()) this->roadDataChart->newPlot("rain" ,model->weather->getRain());
+    if (ui.cloudinessCheckbox->isChecked()) this->roadDataChart->newPlot("Cloudiness" ,model->weather->getCloudiness());
+    if (ui.trafficMsgCheckbox->isChecked()) this->roadDataChart->newPlot("traffic messages" ,model->trafficMessages->getTrafficMessageCount());
+    if (ui.frictionCheckbox->isChecked()) this->roadDataChart->newPlot("friction" ,model->roadCondition->getFriction());
 
 }
+
+
+void MainWindow::updateWeatherChartData()
+{
+    this->weatherChart->deletePlots();
+    if (ui.checkBox->isChecked()) this->weatherChart->newPlot("wind" ,model->weather->getWind());
+    if (ui.checkBox_3->isChecked()) this->weatherChart->newPlot("temperature" ,model->weather->getTemperature());
+    if (ui.checkBox_2->isChecked()) this->weatherChart->newPlot("rain" ,model->weather->getRain());
+    //this->weatherChart->newPlot("wind" ,model->weather->getCloudiness())
+}
+
+void MainWindow::updateWeatherData()
+    {
+
+    updateWeatherChartData();
+    // show current weather conditions
+    ui.lcdNumber->display(model->weather->getCurrentTemperature());
+    ui.lcdNumber_2->display(model->weather->getCurrentWind());
+    ui.lcdNumber_3->display(model->weather->getCurrentRain());
+    // shouldn't this be here? model->weather->getCurrentCloudiness();
+
+    // show key temperatures of the month
+    ui.maxTempLcd->display(model->weather->getMaxTemp());
+    ui.minTempLcd->display(model->weather->getMinTemp());
+    ui.dailyAvgLcd->display(model->weather->getAverageTemp());
+    }
+
 void MainWindow::updateTimeLineLabel(int newValue)
 {
     QString timeLineText = QString::number(newValue);
@@ -173,3 +228,4 @@ void MainWindow::sendUpdateRequestForRoadData()
     int timePos = this->timeLineSlider->sliderPosition();
     emit this->updateRoadData(timePos);
 }
+

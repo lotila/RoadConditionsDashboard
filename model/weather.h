@@ -15,16 +15,25 @@ class Weather
 public:
     Weather();
     void updateTemperature(const util::Coord& coord, const util::TimeSlot& timeSlot);
-    util::TimeSeries getTemperature();
+    void updateKeyTemperatures(/*month*/);
+    util::TimeSeries getTemperature() const;
+    float getCurrentTemperature() const;
+    float getAverageTemp() const;
+    float getMaxTemp() const;
+    float getMinTemp() const;
+
 
     void updateWind(const util::Coord& coord, const util::TimeSlot& timeSlot);
-    util::TimeSeries getWind();
+    util::TimeSeries getWind() const;
+    float getCurrentWind() const;
 
     void updateRain(const util::Coord& coord, const util::TimeSlot& timeslot);
-    util::TimeSeries getRain();
+    util::TimeSeries getRain() const;
+    float getCurrentRain() const;
 
     void updateCloudiness(const util::Coord& coord, const util::TimeSlot& timeslot);
-    util::TimeSeries getCloudiness();
+    util::TimeSeries getCloudiness() const;
+    float getCurrentCloudiness() const;
 
     // old exmples
     const std::string& avgWind(const util::Coord& coord, const util::TimeSlot& time);
@@ -48,12 +57,18 @@ private:
     static std::string createObservationsQuery(WEATHER_PARAMETER parameter, const util::Coord& coord, const util::TimeSlot& timeSlot);
     static std::string createForecastQuery(WEATHER_PARAMETER parameter, const util::Coord& coord, const util::TimeSlot& timeSlot);
 
-    std::string currentWind;
+    std::string currentWindTest;
 
     util::TimeSeries temperature;
     util::TimeSeries wind;
     util::TimeSeries rain;
     util::TimeSeries cloudiness;
+
+    float averageTemp;
+    float maxTemp;
+    float minTemp;
+
+
 };
 
 }

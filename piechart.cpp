@@ -1,13 +1,13 @@
 #include "piechart.h"
 
 PieChart::PieChart(QString title,  QWidget* layoutWidget,
-                   std::unordered_map<QString, int>& slices )
+                   std::unordered_map<std::string, int> slices )
     : Chart(title, layoutWidget)
 {
     series_ = new QPieSeries();
     for (auto& slice : slices)
     {
-        series_->append(slice.first,slice.second);
+        series_->append(QString::fromStdString(slice.first),slice.second);
     }
 
     for (auto& slice : series_->slices())
