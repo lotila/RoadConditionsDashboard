@@ -117,7 +117,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
 
     connect(this->timeLineSliderWP, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabelWP(int)));
     //Update model when timeline is selected(handle is released):
-    connect(this->timeLineSliderWP, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestFoRoadData()));
+    connect(this->timeLineSliderWP, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForWeatherData()));
 
 
 //Connections for Buttons in GUI:
@@ -203,5 +203,10 @@ void MainWindow::updateTimeLineLabelWP(int newValue)
 void MainWindow::sendUpdateRequestForRoadData()
 {
     int timePos = this->timeLineSlider->sliderPosition();
-    emit this->updateRoadData(timePos);
+    emit this->updateRoadPageData(timePos);
+}
+void MainWindow::sendUpdateRequestForWeatherData()
+{
+    int timePos = this->timeLineSliderWP->sliderPosition();
+    emit this->updateWeatherPageData(timePos);
 }

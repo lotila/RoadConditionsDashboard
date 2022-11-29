@@ -22,7 +22,7 @@ void Controller::buttonClicked()
     this->model->weather->updateWeather();
     emit this->buttonClickFinished();
 }
-void Controller::updateRoadDataModel(int timeValue)
+void Controller::updateRoadPageDataModel(int timeValue)
 {
     if(timeValue == 0) return; //Dont update model if time is set to 0
 //Reciewed time:
@@ -39,7 +39,7 @@ void Controller::updateRoadDataModel(int timeValue)
     emit this->updateRoadDataModelFinished();
 }
 
-void Controller::updateWeatherDataModel(int timeValue)
+void Controller::updateWeatherPageDataModel(int timeValue)
 {
     if(timeValue == 0) return; //Dont update model if time is set to 0
 //Reciewed time:

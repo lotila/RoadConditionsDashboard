@@ -26,9 +26,11 @@ public slots:
     void updateTimeLineLabel(int);
     void updateTimeLineLabelWP(int);
     void sendUpdateRequestForRoadData();
+    void sendUpdateRequestForWeatherData();
 signals:
     void itemClicked();
-    void updateRoadData(int);
+    void updateRoadPageData(int);
+    void updateWeatherPageData(int);
 private:
 //Model:
     Model* model;

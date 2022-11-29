@@ -19,8 +19,8 @@ signals:
 
 private slots:
     void buttonClicked();
-    void updateRoadDataModel(int);
-    void updateWeatherDataModel(int);
+    void updateRoadPageDataModel(int);
+    void updateWeatherPageDataModel(int);
 private:
     Model* model;
     MainWindow* widget;

@@ -18,6 +18,7 @@ public:
     SearchBar(QString placeName, QWidget *parent = nullptr); // Constructor when loading from saved preferences (needed?)
 
     QString getText();
+    void setText(QString);
 
 private:
     Ui::SearchBarWidget searchBarUi;
