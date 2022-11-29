@@ -2,7 +2,7 @@
 #define ROADCONDITION_H
 
 #include <string>
-
+#include "util.h"
 namespace models
 {
 
@@ -12,35 +12,47 @@ public:
     RoadCondition();
     void updateRoadCondition();
 
-    enum class CONDITION_TYPE
-    {
-        FORECAST,
-        OBSERVATION
-    };
+
+    util::TimeSeries getFriction() const;
+    float getCurrentFriction() const;
+    util::TimeSeries getRoadcondition() const;
+    float getCurrentRoadcondition() const;
+    util::TimeSeries getVisibility() const;
+    float getCurrentVisibility() const;
+
 
 private:
-    int id;
 
-    CONDITION_TYPE type = CONDITION_TYPE::FORECAST;
+    util::TimeSeries friction;
 
-    std::string precipitation;
-    std::string visibility;
-    std::string friction;
-    std::string overallRoadCondition;
 
-    bool slippery;
-    bool freezingRain;
-    bool daylight;
+    util::TimeSeries roadcondition;
 
-    struct {
-        std::string air;
-        std::string road;
-    } temperature;
+    util::TimeSeries visibility;
 
-    struct {
-        float speed;
-        int direction;
-    } wind;
+
+    //int id;
+
+    //CONDITION_TYPE type = CONDITION_TYPE::FORECAST;
+
+    //std::string precipitation;
+    //std::string visibility;
+    //std::string friction;
+    //std::string overallRoadCondition;
+
+    //bool slippery;
+    //bool freezingRain;
+    //bool daylight;
+
+    //struct {
+    //    std::string air;
+    //    std::string road;
+    //} temperature;
+
+    //struct {
+    //    float speed;
+    //    int direction;
+    //} wind;
 };
 
 }

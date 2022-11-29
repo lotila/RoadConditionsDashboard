@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 #include <QtWidgets>
+#include <string>
 
 #include <QtCharts/QChart>
 #include <QtCharts/QChartView>
@@ -13,10 +14,14 @@
 #include <QtCharts/QPieSlice>
 
 
+
+
+
+
 class PieChart : public Chart
 {
 public:
-    PieChart(QString title,  QWidget* layoutWidget, std::unordered_map<QString, int>& slices );
+    PieChart(QString title,  QWidget* layoutWidget, std::unordered_map<std::string, int> slices );
     ~PieChart();
 
 

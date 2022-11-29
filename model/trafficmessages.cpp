@@ -12,6 +12,9 @@ namespace models
 TrafficMessages::TrafficMessages()
 {
 
+
+    // test data
+    data.push_back({1,11});data.push_back({2,11});
 }
 
 void TrafficMessages::updateTrafficMessageCount(const util::Coord& coord, const util::TimeSlot& timeSlot)
@@ -34,7 +37,7 @@ void TrafficMessages::updateTrafficMessageCount(const util::Coord& coord, const 
     this->data = digitraffigParser::parseTrafficMessageCount(apiResponse, coord, timeSlot);
 }
 
-std::vector<util::TimeValuePair> TrafficMessages::getTrafficMessageCount()
+std::vector<util::TimeValuePair> TrafficMessages::getTrafficMessageCount() const
 {
     return this->data;
 }

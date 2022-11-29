@@ -52,7 +52,7 @@ void LineChart::YaxisLabel(QString name)
 
 }
 
-void LineChart::newPlot(QString name, std::vector<point2d>& points )
+void LineChart::newPlot(QString name, std::vector<util::TimeValuePair> points )
 {
 
    series_.push_back(Chart::vectorToQLineSeries(points));

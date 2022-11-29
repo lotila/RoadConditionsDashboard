@@ -4,15 +4,7 @@
 #include <QtWidgets>
 
 #include <QtCharts/QLineSeries>
-
-struct point2d
-{
-    point2d(float X, float Y) : x(X), y(Y) {};
-
-    float x;
-    float y;
-
-};
+#include "util.h"
 
 
 class Chart
@@ -30,7 +22,7 @@ public:
      * @param vector of points
      * @return QLineSeries*
      */
-    static QLineSeries* vectorToQLineSeries(std::vector<point2d>& points);
+    static QLineSeries* vectorToQLineSeries(std::vector<util::TimeValuePair>& points);
 
 
 

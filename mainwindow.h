@@ -5,6 +5,7 @@
 #include "searchbar.h"
 #include "ui_mainwindow.h"
 #include "linechart.h"
+#include "piechart.h"
 #include <QtWidgets>
 #include <QSlider>
 
@@ -21,13 +22,20 @@ public slots:
     void switchToWeatherPage();
     void createCards();
     void updateCard();
+    void updateCardInfo();
 
     void updateRoadDataChart();
+
+
+    void updateWeatherChartData();
+    void updateWeatherData();
+
     void updateTimeLineLabel(int);
     void sendUpdateRequestForRoadData();
 signals:
     void itemClicked();
     void updateRoadData(int);
+
 private:
 //Model:
     Model* model;
@@ -54,9 +62,13 @@ private:
 
 //RoadPage elements:
         LineChart* roadDataChart;
+        PieChart* pieChart;
         //Settings:
             QSlider* timeLineSlider;
             QLabel* timeLineLabel;
+
+//weather page elements
+            LineChart* weatherChart;
 
 
     // Search bar

@@ -16,7 +16,7 @@ public:
 
     void updateTrafficMessageCount(const util::Coord& coord, const util::TimeSlot& timeSlot);
 
-    std::vector<util::TimeValuePair> getTrafficMessageCount();
+    std::vector<util::TimeValuePair> getTrafficMessageCount() const;
 
 private:
     std::vector<util::TimeValuePair> data;

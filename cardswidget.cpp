@@ -16,8 +16,8 @@ CardsWidget::CardsWidget(QWidget *parent) :
     this->chartWidget_ = cardUi.emilWidget;
 }
 
-CardsWidget::CardsWidget(QString text, int val, QWidget *parent) :
-    QFrame(parent)
+CardsWidget::CardsWidget(QString text, Model* m, QWidget *parent) :
+    QFrame(parent), model(m), text(text)
 {
     Ui::CardsWidget cardUi; //Initializing UI from ui_mainwindow.h
     cardUi.setupUi(this);
@@ -28,18 +28,15 @@ CardsWidget::CardsWidget(QString text, int val, QWidget *parent) :
     this->iconLabel_ = cardUi.iconLabel;
     this->chartWidget_ = cardUi.emilWidget;
 
-    setNowCard(text, val);
+    setNowCard();
 
-    //Setting the predicted card:
-    this->predictedLabel_->setText(text + "Predicted");
-    setPredictedCard(text);
+    setPredictedCard();
+    updateCardInfo();
 }
 
-void CardsWidget::setNowCard(QString text, int val)
+void CardsWidget::setNowCard()
 {
-    QString value = QString::number(val); //Change the val to Qstring
-    this->nowLabel_->setText(text + " Now"); //Set header for the Now card
-    this->nowValueLabel_->setText(value + "%"); //Set the value of the card
+
    //Set the icon:
     QString img_name = text.toLower(); //Variablee name to lowercase(e.g. friction, visibility...
     img_name = img_name+".png"; //image name(e.g. friction.png, visibility.png...
@@ -58,15 +55,35 @@ void CardsWidget::setIcon(QPixmap m)
 
     this->iconLabel_->setText("Icon coming soon :)");
 }
-void CardsWidget::setPredictedCard(QString text)
+void CardsWidget::setPredictedCard()
 {
-    this->predictedLabel_->setText(text+" Predicted");
-    LineChart* cardChart = new LineChart("esimerkki kaavio", chartWidget_);
-    std::vector<point2d> data = {{1,2}, {2,3}, {3,1}, {4,0},{5,2}};
-    std::vector<point2d> data2 = {{1,2}, {2,3},{3,4},{9,0},{17,4}};
+    this->predictedLabel_->setText(this->text+" Predicted");
+    this->cardChart = new LineChart("", chartWidget_);
+}
 
-    cardChart->newPlot("esimerkki kuvaaja" ,data);
-    cardChart->newPlot("esimerkki kuvaaja 2" ,data2);
+void CardsWidget::updateCardInfo()
+{
+    float val = 0;
+    this->cardChart->deletePlots();
+    if (this->text == "Friction")
+    {
+        this->cardChart->newPlot("" ,model->roadCondition->getFriction());
+        val = model->roadCondition->getCurrentFriction();
+    }
+    else if (this->text == "Roadcondition")
+    {
+        this->cardChart->newPlot("" ,model->roadCondition->getRoadcondition());
+        val = model->roadCondition->getCurrentRoadcondition();
+    }
+    else if (this->text == "Visibility")
+    {
+        this->cardChart->newPlot("" ,model->roadCondition->getVisibility());
+        val = model->roadCondition->getCurrentVisibility();
+    }
+
+    QString value = QString::number(val); //Change the val to Qstring
+    this->nowLabel_->setText(this->text + " Now"); //Set header for the Now card
+    this->nowValueLabel_->setText(value + "%"); //Set the value of the card
 }
 
 CardsWidget::~CardsWidget()

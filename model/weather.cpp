@@ -22,6 +22,18 @@ const std::unordered_map<Weather::WEATHER_PARAMETER, std::string> Weather::weath
 Weather::Weather()
 {
     this->updateWeather();
+
+
+    // test data
+
+    wind.push_back({1,15});wind.push_back({2,15});
+    rain.push_back({1,10});rain.push_back({2,10});
+    temperature.push_back({1,5});temperature.push_back({2,5});
+    cloudiness.push_back({1,4});cloudiness.push_back({2,4});
+    //this->updateTemperature(util::Coord(5,5), {0,1});
+    this->averageTemp = 5;
+    this->maxTemp = 5;
+    this->minTemp = 5;
 }
 
 std::string Weather::createObservationsQuery(WEATHER_PARAMETER parameter, const util::Coord &coord, const util::TimeSlot &timeSlot)
@@ -92,10 +104,34 @@ void Weather::updateTemperature(const util::Coord &coord, const util::TimeSlot &
     this->temperature = this->genericUpdate(WEATHER_PARAMETER::TEMPERATURE, coord, timeSlot);
 }
 
-util::TimeSeries Weather::getTemperature()
+util::TimeSeries Weather::getTemperature() const
 {
     return this->temperature;
 }
+
+float Weather::getCurrentTemperature() const
+{
+    if (this->temperature.empty())
+    {
+        std::cerr << "No temperature data" << std::endl;
+        return 0;
+    }
+    return this->temperature.front().value;
+}
+
+float Weather::getAverageTemp() const
+{
+    return this->averageTemp;
+}
+float Weather::getMaxTemp() const
+{
+    return this->maxTemp;
+}
+float Weather::getMinTemp() const
+{
+    return this->minTemp;
+}
+
 
 void Weather::updateWind(const util::Coord &coord, const util::TimeSlot &timeSlot)
 {
@@ -103,9 +139,18 @@ void Weather::updateWind(const util::Coord &coord, const util::TimeSlot &timeSlo
     this->wind = this->genericUpdate(WEATHER_PARAMETER::WIND, coord, timeSlot);
 }
 
-util::TimeSeries Weather::getWind()
+util::TimeSeries Weather::getWind() const
 {
     return this->wind;
+}
+float Weather::getCurrentWind() const
+{
+    if (this->wind.empty())
+    {
+         std::cerr << "No wind data" << std::endl;
+         return 0;
+    }
+    return this->wind.front().value;
 }
 
 void Weather::updateRain(const util::Coord &coord, const util::TimeSlot& timeSlot)
@@ -114,9 +159,19 @@ void Weather::updateRain(const util::Coord &coord, const util::TimeSlot& timeSlo
     this->rain = this->genericUpdate(WEATHER_PARAMETER::RAIN, coord, timeSlot);
 }
 
-util::TimeSeries Weather::getRain()
+util::TimeSeries Weather::getRain() const
 {
     return this->rain;
+}
+
+float Weather::getCurrentRain() const
+{
+    if (this->rain.empty())
+    {
+         std::cerr << "No rain data" << std::endl;
+         return 0;
+    }
+    return this->rain.front().value;
 }
 
 void Weather::updateCloudiness(const util::Coord &coord, const util::TimeSlot& timeSlot)
@@ -125,14 +180,26 @@ void Weather::updateCloudiness(const util::Coord &coord, const util::TimeSlot& t
     this->cloudiness = this->genericUpdate(WEATHER_PARAMETER::CLOUDINESS, coord, timeSlot);
 }
 
-util::TimeSeries Weather::getCloudiness()
+util::TimeSeries Weather::getCloudiness() const
 {
     return this->cloudiness;
 }
 
+float Weather::getCurrentCloudiness() const
+{
+    if (this->cloudiness.empty())
+    {
+        std::cerr << "No Cloudiness data" << std::endl;
+        return 0;
+    }
+    return this->cloudiness.front().value;
+}
+
+
+
 const std::string &Weather::avgWind(const util::Coord& coord, const util::TimeSlot& time)
 {
-    return this->currentWind;
+    return this->currentWindTest;
 }
 
 void Weather::updateWeather()
@@ -140,7 +207,7 @@ void Weather::updateWeather()
     std::string query = "service=WFS&version=2.0.0&request=getFeature&storedquery_id=livi::observations::road::default::timevaluepair&place=hervanta&parameters=windspeedms&";
     std::string apiResponse;
     APIClient::getFMIAPIData(&apiResponse, query);
-    this->currentWind = FMIParser::wind(apiResponse);
+    this->currentWindTest = FMIParser::wind(apiResponse);
 }
 
 }
