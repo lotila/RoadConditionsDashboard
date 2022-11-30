@@ -25,6 +25,7 @@ public slots:
     void updateView();
     void updateTimeLineLabel(int);
     void sendUpdateRequestForTimeline();
+    void sendUpdateRequestForCoordinates();
 signals:
     void itemClicked();
     void updateTimeline(int);

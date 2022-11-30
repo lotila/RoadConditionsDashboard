@@ -113,7 +113,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(ui.moreButton_road, SIGNAL(clicked()), this, SLOT(switchToRoadPage()));
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));
     connect(ui.homeButton_road, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
-
+    connect(ui.searchButton, SIGNAL(pressed()), this, SLOT(sendUpdateRequestForCoordinates()));
 }
 
 void MainWindow::updateItem()
@@ -175,7 +175,7 @@ void MainWindow::switchToWeatherPage()
     this->stackWidget->setCurrentWidget(this->weatherpage);
 }
 void MainWindow::updateView()
-{ //Here we should get the data from model and give it to our chart from those variables that are selected:
+{ //Here we should draw the charts again
 
 }
 void MainWindow::updateTimeLineLabel(int newValue)
@@ -188,11 +188,14 @@ void MainWindow::updateTimeLineLabel(int newValue)
 void MainWindow::sendUpdateRequestForTimeline()
 {
     QObject* slider = QObject::sender();
-    int value;
+    int value = 0;
 //Update the timeline label for which evber slider send it
-    std::cout << "got here" << std::endl;
     if(slider == this->timeLineSlider) value= this->timeLineSlider->value();
     if(slider == this->timeLineSliderWP) value = this->timeLineSliderWP->value();
-
     emit this->updateTimeline(value);
+}
+void MainWindow::sendUpdateRequestForCoordinates()
+{
+    util::Coord newCoords = {22, 44}; //this->sb_->getCoordinates(); TODO: use sb methods
+    emit this->updateCoordinates(newCoords);
 }

@@ -9,9 +9,12 @@ Controller::Controller(Model *model, MainWindow* widget, QObject *parent)
 {
     connect(this->widget, SIGNAL(itemClicked()), this, SLOT(buttonClicked()));
     connect(this, SIGNAL(buttonClickFinished()), this->widget, SLOT(updateItem()));
-    //Update call from the road page:
+
     connect(this->widget, SIGNAL(updateTimeline(int)), this, SLOT(updateModelTimeline(int)));
     connect(this, SIGNAL(updateModelTimelineFinished()), this->widget, SLOT(updateView()));
+
+    connect(this->widget, SIGNAL(updateCoordinates(util::Coord)), this, SLOT(updateModelCoordinates(util::Coord)));
+    connect(this, SIGNAL(updateModelCoordinatesFinished()), this->widget, SLOT(updateView()));
 }
 
 void Controller::buttonClicked()
@@ -36,6 +39,17 @@ void Controller::updateModelTimeline(int timeValue)
     emit this->updateModelTimelineFinished();
 }
 
+
+void Controller::updateModelCoordinates(util::Coord newCoord)
+{//Function for updating the model coordinates
+
+    std::cout << "current COORD is " <<  newCoord.lat << std::endl;
+    //TODO: UPDate the model coordinates:
+
+    emit this->updateModelTimelineFinished();
+}
+
+
 void Controller::formTimeSlot(int time)
 {
     if(time < 0)
@@ -43,9 +57,4 @@ void Controller::formTimeSlot(int time)
         this->currentTimeSlot = {time,0};
     }
     this->currentTimeSlot = {0,time};
-}
-
-void Controller::updateModelCoordinates(util::Coord newCooord)
-{//Function for updating the model coordinates
-
 }
