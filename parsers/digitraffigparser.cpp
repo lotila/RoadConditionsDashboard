@@ -129,7 +129,7 @@ std::vector<util::TimeValuePair> digitraffigParser::parseTrafficMessageCount(
 std::vector<util::TimeValuePair> digitraffigParser::parseRoadCondition(const std::string &input)
 {
     nlohmann::json data = nlohmann::json::parse(input);
-    const nlohmann::json& recent_data = data.at(-1); //get the most recent observation+forecast
+    const nlohmann::json& recent_data = data.at("weatherData").back().at("roadConditions"); //get the most recent observation+forecast
     std::vector<util::TimeValuePair> result;
 
     auto getData = [](nlohmann::json obj)
@@ -140,15 +140,16 @@ std::vector<util::TimeValuePair> digitraffigParser::parseRoadCondition(const std
         if(obj.at("overallRoadCondition") == "POOR_CONDITION") condition = 2;
         if(obj.at("overallRoadCondition") == "EXTREMELY_POOR_CONDITION") condition = 1;
         if(obj.at("overallRoadCondition") == "CODITION_COULD_NOT_BE_RESOLVED") condition = 0;
-
         std::string timeString = obj.at("forecastName");
-        timeString.erase(timeString.end()); //removing th h from the end of the string
-
+        timeString.substr(0, timeString.back()-1); //removing th h from the end of the string
         int timevalue = stoi(timeString);
-        return util::TimeValuePair({timevalue, condition});
+        util::TimeValuePair t;
+        t.time = timevalue;
+        t.value = condition;
+        return t;
     };
 
-    for(const nlohmann::json& j : recent_data.at("roadConditions"))
+    for(const nlohmann::json& j : recent_data)
     {
         result.push_back(getData(j));
     }

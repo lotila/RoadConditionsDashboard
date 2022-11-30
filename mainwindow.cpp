@@ -30,6 +30,8 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     searchBar = ui.searchWidgetMain;
     sb_ = new SearchBar(searchBar);
 
+    // this->model->roadCondition->updateRoadCondition(util::Coord(sb_.lat, sb_.lon));
+
 //RoadFrame:
     //Initializing the Buttons for road Preview:
     this->nextButton_ = ui.nextButton_road;
