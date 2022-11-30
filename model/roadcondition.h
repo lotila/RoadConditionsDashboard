@@ -10,13 +10,15 @@ class RoadCondition
 {
 public:
     RoadCondition();
-    void updateRoadCondition();
+    void updateRoadCondition(const util::Coord &coord);
 
 
     util::TimeSeries getFriction() const;
     float getCurrentFriction() const;
+
     util::TimeSeries getRoadcondition() const;
     float getCurrentRoadcondition() const;
+
     util::TimeSeries getVisibility() const;
     float getCurrentVisibility() const;
 
