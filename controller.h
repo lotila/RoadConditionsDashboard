@@ -17,16 +17,18 @@ public:
 
 signals:
     void buttonClickFinished();
-    void updateRoadDataModelFinished();
+    void updateModelTimelineFinished();
+    void updateModelCoordinatesFinished();
 
 private slots:
     void buttonClicked();
-    void updateRoadDataModel(int);
+    void updateModelTimeline(int);
+    void updateModelCoordinates(util::Coord);
 private:
     Model* model;
     MainWindow* widget;
     util::TimeSlot currentTimeSlot;
-    //Here some kind of current time? So we wont update if time is same?
+    util::Coord* currentCoordinates;
 };
 
 #endif

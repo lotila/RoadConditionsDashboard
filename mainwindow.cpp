@@ -66,32 +66,47 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
 //RoadPage:
     this->roadDataChart = new LineChart("", ui.roadChartWidget);
     updateRoadDataChart();
-
-    connect(this->ui.trafficMsgCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
-    connect(this->ui.cloudinessCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
-    connect(this->ui.rainCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
-    connect(this->ui.temperatureCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
-    connect(this->ui.frictionCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
-    connect(this->ui.windCheckbox, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
-
+    connect(this->ui.trafficMsgCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.cloudinessCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.rainCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.temperatureCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.frictionCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
+    connect(this->ui.windCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
 
 //Connections for ButBtons in GUI:
-
 
     //Initialize chart setting elements:
     this->timeLineSlider = this->ui.timeLineSlider;
     this->timeLineLabel = this->ui.timeLineSelected;
     this->timeLineSlider->setRange(-12, 12);
 
+    //Initialize chart setting elements:
+
+    this->timeLineSlider = this->ui.timeLineSlider; //Timeline slider
+    this->timeLineLabel = this->ui.timeLineSelected; //Timeline value label
+    this->timeLineSlider->setRange(-12, 12);
     this->timeLineLabel->setText("0");
-    //update the Timeline position actively
+
+    //Signals and slots:
+    //update the Timeline value actively
     connect(this->timeLineSlider, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabel(int)));
     //Update model when timeline is selected(handle is released):
-    connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForRoadData()));
 
-    connect(this->ui.checkBox, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
-    connect(this->ui.checkBox_2, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
-    connect(this->ui.checkBox_3, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
+    connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForTimeline()));
+
+//WeatherPage:
+    this->timeLineSliderWP = this->ui.timeLineSliderWP; //Timeline slider
+    this->timeLineLabelWP = this->ui.timeLineSelectedWP; //Timeline value label
+    this->timeLineSliderWP->setRange(-12, 12);
+    this->timeLineLabelWP->setText("0");
+
+    connect(this->timeLineSliderWP, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabel(int)));
+    //Update model when timeline is selected(handle is released):
+    connect(this->timeLineSliderWP, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForTimeline()));
+
+    connect(this->ui.rainCheckBoxWeatherPage, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
+    connect(this->ui.windCheckBoxWeatherPage, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
+    connect(this->ui.temperatureCheckBoxWeatherPage, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
 
 //WeatherPage:
     this->weatherChart = new LineChart("", ui.weatherChart);
@@ -112,10 +127,10 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));
     connect(ui.homeButton_road, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
 
-
 // maintanance work
     this->pieChart = new PieChart("", this->ui.maintananceWorkPie, this->model->maintenance->getMaintanance());
 
+    connect(ui.searchButton, SIGNAL(pressed()), this, SLOT(sendUpdateRequestForCoordinates()));
 }
 
 void MainWindow::updateItem()
@@ -185,25 +200,29 @@ void MainWindow::switchToWeatherPage()
 {
     this->stackWidget->setCurrentWidget(this->weatherpage);
 }
+
 void MainWindow::updateRoadDataChart()
 {
     this->roadDataChart->deletePlots();
-    if (ui.windCheckbox->isChecked()) this->roadDataChart->newPlot("wind" ,model->weather->getWind());
-    if (ui.temperatureCheckbox->isChecked()) this->roadDataChart->newPlot("temperature" ,model->weather->getTemperature());
-    if (ui.rainCheckbox->isChecked()) this->roadDataChart->newPlot("rain" ,model->weather->getRain());
-    if (ui.cloudinessCheckbox->isChecked()) this->roadDataChart->newPlot("Cloudiness" ,model->weather->getCloudiness());
-    if (ui.trafficMsgCheckbox->isChecked()) this->roadDataChart->newPlot("traffic messages" ,model->trafficMessages->getTrafficMessageCount());
-    if (ui.frictionCheckbox->isChecked()) this->roadDataChart->newPlot("friction" ,model->roadCondition->getFriction());
+    if (ui.windCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("wind" ,model->weather->getWind());
+    if (ui.temperatureCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("temperature" ,model->weather->getTemperature());
+    if (ui.rainCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("rain" ,model->weather->getRain());
+    if (ui.cloudinessCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("Cloudiness" ,model->weather->getCloudiness());
+    if (ui.trafficMsgCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("traffic messages" ,model->trafficMessages->getTrafficMessageCount());
+    if (ui.frictionCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("friction" ,model->roadCondition->getFriction());
+}
+void MainWindow::updateView()
+{ //Here we should draw the charts again
+
 
 }
-
 
 void MainWindow::updateWeatherChartData()
 {
     this->weatherChart->deletePlots();
-    if (ui.checkBox->isChecked()) this->weatherChart->newPlot("wind" ,model->weather->getWind());
-    if (ui.checkBox_3->isChecked()) this->weatherChart->newPlot("temperature" ,model->weather->getTemperature());
-    if (ui.checkBox_2->isChecked()) this->weatherChart->newPlot("rain" ,model->weather->getRain());
+    if (ui.windCheckBoxWeatherPage->isChecked()) this->weatherChart->newPlot("wind" ,model->weather->getWind());
+    if (ui.temperatureCheckBoxWeatherPage->isChecked()) this->weatherChart->newPlot("temperature" ,model->weather->getTemperature());
+    if (ui.rainCheckBoxWeatherPage->isChecked()) this->weatherChart->newPlot("rain" ,model->weather->getRain());
     //this->weatherChart->newPlot("wind" ,model->weather->getCloudiness())
 }
 
@@ -225,14 +244,24 @@ void MainWindow::updateWeatherData()
 
 void MainWindow::updateTimeLineLabel(int newValue)
 {
+    QObject* slider = QObject::sender();
     QString timeLineText = QString::number(newValue);
-    this->timeLineLabel->setText(timeLineText);
+    if(slider == this->timeLineSlider) this->timeLineLabel->setText(timeLineText);
+    if(slider == this->timeLineSliderWP) this->timeLineLabelWP->setText(timeLineText);
 }
-
-void MainWindow::sendUpdateRequestForRoadData()
+void MainWindow::sendUpdateRequestForTimeline()
 {
-    int timePos = this->timeLineSlider->sliderPosition();
-    emit this->updateRoadData(timePos);
+    QObject* slider = QObject::sender();
+    int value = 0;
+//Update the timeline label for which evber slider send it
+    if(slider == this->timeLineSlider) value= this->timeLineSlider->value();
+    if(slider == this->timeLineSliderWP) value = this->timeLineSliderWP->value();
+    emit this->updateTimeline(value);
+}
+void MainWindow::sendUpdateRequestForCoordinates()
+{
+    util::Coord newCoords = {22, 44}; //this->sb_->getCoordinates(); TODO: use sb methods
+    emit this->updateCoordinates(newCoords);
 }
 
 void MainWindow::setWeatherIcons()

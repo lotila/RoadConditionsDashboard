@@ -17,11 +17,16 @@ SearchBar::SearchBar(QString placeName, QWidget *parent) :
     Ui::SearchBarWidget searchBarUi;
     searchBarUi.setupUi(this);
 
-    this->text_ = placeName;
-    searchBarUi.searchBar->setText(this->text_);
+    setText(placeName);
 }
 
 QString SearchBar::getText()
 {
     return this->text_;
+}
+
+void SearchBar::setText(QString placeName)
+{
+    this->text_ = placeName;
+    searchBarUi.searchBar->setText(this->text_);
 }

@@ -25,20 +25,18 @@ public slots:
     void createCards();
     void updateCard();
     void updateCardInfo();
-
-    void updateRoadDataChart();
-
-
-    void updateWeatherChartData();
     void updateWeatherData();
 
+    void updateRoadDataChart();
+    void updateWeatherChartData(); 
+    void updateView();
     void updateTimeLineLabel(int);
-    void sendUpdateRequestForRoadData();
-
+    void sendUpdateRequestForTimeline();
+    void sendUpdateRequestForCoordinates();
 signals:
     void itemClicked();
-    void updateRoadData(int);
-
+    void updateTimeline(int);
+    void updateCoordinates(util::Coord);
 private:
 //Model:
     Model* model;
@@ -83,7 +81,12 @@ private:
             LineChart* weatherChart;
 
 
-    // Search bar
+//WeatherPage elements:
+        //Settings
+        QSlider* timeLineSliderWP;
+        QLabel* timeLineLabelWP;
+
+// Search bar
     QWidget* searchBar;
     SearchBar* sb_;
 };

@@ -10,8 +10,11 @@ Controller::Controller(Model *model, MainWindow* widget, QObject *parent)
     connect(this->widget, SIGNAL(itemClicked()), this, SLOT(buttonClicked()));
     connect(this, SIGNAL(buttonClickFinished()), this->widget, SLOT(updateItem()));
 
-    connect(this->widget, SIGNAL(updateRoadData(int)), this, SLOT(updateRoadDataModel(int)));
-    connect(this, SIGNAL(updateRoadDataModelFinished()), this->widget, SLOT(updateRoadDataChart()));
+    connect(this->widget, SIGNAL(updateTimeline(int)), this, SLOT(updateModelTimeline(int)));
+    connect(this, SIGNAL(updateModelTimelineFinished()), this->widget, SLOT(updateView()));
+
+    connect(this->widget, SIGNAL(updateCoordinates(util::Coord)), this, SLOT(updateModelCoordinates(util::Coord)));
+    connect(this, SIGNAL(updateModelCoordinatesFinished()), this->widget, SLOT(updateView()));
 }
 
 void Controller::buttonClicked()
@@ -19,7 +22,7 @@ void Controller::buttonClicked()
     //this->model->weather->updateWind({0, 0}, {1, 2});// test location
     emit this->buttonClickFinished();
 }
-void Controller::updateRoadDataModel(int timeValue)
+void Controller::updateModelTimeline(int timeValue)
 {
     if(timeValue == 0) return; //Dont update model if time is set to 0
 //Reciewed time:
@@ -30,10 +33,20 @@ void Controller::updateRoadDataModel(int timeValue)
     std::cout << "going to update model" << std::endl;
 //TODO: Add the Model Updatefunctions here when they are ready or defined:
     //this->model->weather->updateWind({0, 0}, {1, 2}); // test location
-
 //Send signal when update done:
-    emit this->updateRoadDataModelFinished();
+    emit this->updateModelTimelineFinished();
 }
+
+
+void Controller::updateModelCoordinates(util::Coord newCoord)
+{//Function for updating the model coordinates
+
+    std::cout << "current COORD is " <<  newCoord.lat << std::endl;
+    //TODO: UPDate the model coordinates:
+
+    emit this->updateModelTimelineFinished();
+}
+
 
 void Controller::formTimeSlot(int time)
 {
