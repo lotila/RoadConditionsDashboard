@@ -12,6 +12,9 @@ class Controller : public QObject
 public:
     explicit Controller(Model* model, MainWindow* widget, QObject *parent = nullptr);
     void formTimeSlot(int); //Should this be private?
+
+    void updateWeatherIcon();
+
 signals:
     void buttonClickFinished();
     void updateRoadDataModelFinished();
