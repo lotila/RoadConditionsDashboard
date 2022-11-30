@@ -16,6 +16,9 @@ std::vector<util::TimeValuePair> parseTrafficMessageCount(
         const util::Coord& coord,
         const util::TimeSlot& timeSlot);
 
+
+std::vector<util::TimeValuePair> parseRoadCondition(const std::string& input);
 }
+
 
 #endif
