@@ -43,3 +43,8 @@ void Controller::formTimeSlot(int time)
     }
     this->currentTimeSlot = {0,time};
 }
+
+void Controller::updateWeatherIcon()
+{
+
+}

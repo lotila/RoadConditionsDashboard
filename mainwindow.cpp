@@ -93,12 +93,18 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(this->ui.checkBox_2, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
     connect(this->ui.checkBox_3, SIGNAL(stateChanged(int)), this, SLOT(updateWeatherData()));
 
-
 //WeatherPage:
     this->weatherChart = new LineChart("", ui.weatherChart);
     //Plotting the wanted data:
     updateWeatherData();
 
+    this->sunIcon_ = ui.sunIcon;
+    this->cloudIcon_ = ui.cloudIcon;
+    this->windIcon_ = ui.windIcon;
+    this->snowIcon_ = ui.snowIcon;
+    this->rainIcon_ = ui.rainIcon;
+
+    setWeatherIcons();
 
 //Connections for Buttons in GUI:
     connect(this->otherButton, SIGNAL(clicked()), this, SIGNAL(itemClicked()));
@@ -229,3 +235,70 @@ void MainWindow::sendUpdateRequestForRoadData()
     emit this->updateRoadData(timePos);
 }
 
+void MainWindow::setWeatherIcons()
+{
+
+    QPixmap sun(":/images/sun.png");
+    this->sunIcon_->setPixmap(sun);
+    this->sunIcon_->setScaledContents(true);
+    this->sunIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    this->sunIcon_->show();
+    QPixmap cloud(":/images/cloud.png");
+    this->cloudIcon_->setPixmap(cloud);
+    this->cloudIcon_->setScaledContents(true);
+    this->cloudIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    this->cloudIcon_->show();
+    QPixmap rain(":/images/rain.png");
+    this->rainIcon_->setPixmap(rain);
+    this->rainIcon_->setScaledContents(true);
+    this->rainIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    this->rainIcon_->show();
+    QPixmap snow(":/images/snow.png");
+    this->snowIcon_->setPixmap(snow);
+    this->snowIcon_->setScaledContents(true);
+    this->snowIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    this->snowIcon_->show();
+    QPixmap wind(":/images/wind.png");
+    this->windIcon_->setPixmap(wind);
+    this->windIcon_->setScaledContents(true);
+    this->windIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    this->windIcon_->show();
+
+    /*
+    if(sunny) {
+        QPixmap sun(":/images/sun.png");
+        this->sunIcon_->setPixmap(sun);
+        this->sunIcon_->setScaledContents(true);
+        this->sunIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        this->sunIcon_->show();
+    }
+    if(cloudy) {
+        QPixmap cloud(":/images/cloud.png");
+        this->cloudIcon_->setPixmap(cloud);
+        this->cloudIcon_->setScaledContents(true);
+        this->cloudIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        this->cloudIcon_->show();
+    }
+    if(rainy) {
+        QPixmap rain(":/images/rain.png");
+        this->rainIcon_->setPixmap(rain);
+        this->rainIcon_->setScaledContents(true);
+        this->rainIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        this->rainIcon_->show();
+    }
+    if(snowy) {
+        QPixmap snow(":/images/snow.png");
+        this->snowIcon_->setPixmap(snow);
+        this->snowIcon_->setScaledContents(true);
+        this->snowIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        this->snowIcon_->show();
+    }
+    if(windy) {
+        QPixmap wind(":/images/wind.png");
+        this->windIcon_->setPixmap(wind);
+        this->windIcon_->setScaledContents(true);
+        this->windIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        this->windIcon_->show();
+    }
+    */
+}

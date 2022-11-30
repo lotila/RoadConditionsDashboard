@@ -15,6 +15,8 @@ class MainWindow : public QWidget
 public:
     explicit MainWindow(Model* model, QWidget *parent = 0);
     void updateRoadPreview();
+    void setWeatherIcons();
+
 public slots:
     void updateItem();
     void switchToRoadPage();
@@ -32,6 +34,7 @@ public slots:
 
     void updateTimeLineLabel(int);
     void sendUpdateRequestForRoadData();
+
 signals:
     void itemClicked();
     void updateRoadData(int);
@@ -51,6 +54,15 @@ private:
     QLabel* view;
     QPushButton *button;
     QPushButton *otherButton;
+
+    // WeatherPage elements:
+    QLabel *sunIcon_;
+    QLabel *cloudIcon_;
+    QLabel *windIcon_;
+    QLabel *snowIcon_;
+    QLabel *rainIcon_;
+
+    LineChart *weatherPageChart_;
 
 //RoadPreview elements:
     QPushButton* prevButton_;
