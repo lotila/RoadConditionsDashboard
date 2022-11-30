@@ -14,13 +14,13 @@ public:
     void formTimeSlot(int); //Should this be private?
 signals:
     void buttonClickFinished();
-    void updateRoadDataModelFinished();
-    void updateWeatherDataModelFinished();
+    void updateModelTimelineFinished();
+    void updateModelCoordinatesFinished();
 
 private slots:
     void buttonClicked();
-    void updateRoadPageDataModel(int);
-    void updateWeatherPageDataModel(int);
+    void updateModelTimeline(int);
+    void updateModelCoordinates(util::Coord);
 private:
     Model* model;
     MainWindow* widget;

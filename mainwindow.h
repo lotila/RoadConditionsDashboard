@@ -22,15 +22,13 @@ public slots:
     void createCards();
     void updateCard();
 
-    void updateRoadDataChart();
+    void updateView();
     void updateTimeLineLabel(int);
-    void updateTimeLineLabelWP(int);
-    void sendUpdateRequestForRoadData();
-    void sendUpdateRequestForWeatherData();
+    void sendUpdateRequestForTimeline();
 signals:
     void itemClicked();
-    void updateRoadPageData(int);
-    void updateWeatherPageData(int);
+    void updateTimeline(int);
+    void updateCoordinates(util::Coord);
 private:
 //Model:
     Model* model;

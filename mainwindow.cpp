@@ -95,19 +95,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     //update the Timeline value actively
     connect(this->timeLineSlider, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabel(int)));
     //Update model when timeline is selected(handle is released):
-    connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForRoadData()));
-    //Show/unshow data:
-    /*TODO: These Slots would call the roadDatachartmethods which would show and unshow subplots of the roadDataChart
-            roadDataChart would therefore allways have the subplots: temp, wind, cloud, rain, friction, traffic
-            When constructed these are formed naturally from the model and in default they would be hidden
-            When the value of timeline changes we would update the model and therefore once updated draw the subplots again
-    */
-    connect(this->temperatureSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
-    connect(this->windSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
-    connect(this->cloudSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
-    connect(this->rainSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
-    connect(this->frictionSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
-    connect(this->trafficSelectionRP, SIGNAL(toggled(bool)), this, SLOT());
+    connect(this->timeLineSlider, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForTimeline()));
 
 //WeatherPage:
     this->timeLineSliderWP = this->ui.timeLineSliderWP; //Timeline slider
@@ -115,9 +103,9 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     this->timeLineSliderWP->setRange(-12, 12);
     this->timeLineLabelWP->setText("0");
 
-    connect(this->timeLineSliderWP, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabelWP(int)));
+    connect(this->timeLineSliderWP, SIGNAL(valueChanged(int)), this, SLOT(updateTimeLineLabel(int)));
     //Update model when timeline is selected(handle is released):
-    connect(this->timeLineSliderWP, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForWeatherData()));
+    connect(this->timeLineSliderWP, SIGNAL(sliderReleased()), this, SLOT(sendUpdateRequestForTimeline()));
 
 
 //Connections for Buttons in GUI:
@@ -186,27 +174,25 @@ void MainWindow::switchToWeatherPage()
 {
     this->stackWidget->setCurrentWidget(this->weatherpage);
 }
-void MainWindow::updateRoadDataChart()
+void MainWindow::updateView()
 { //Here we should get the data from model and give it to our chart from those variables that are selected:
 
 }
 void MainWindow::updateTimeLineLabel(int newValue)
 {
+    QObject* slider = QObject::sender();
     QString timeLineText = QString::number(newValue);
-    this->timeLineLabel->setText(timeLineText);
+    if(slider == this->timeLineSlider) this->timeLineLabel->setText(timeLineText);
+    if(slider == this->timeLineSliderWP) this->timeLineLabelWP->setText(timeLineText);
 }
-void MainWindow::updateTimeLineLabelWP(int newValue)
+void MainWindow::sendUpdateRequestForTimeline()
 {
-    QString timeLineText = QString::number(newValue);
-    this->timeLineLabelWP->setText(timeLineText);
-}
-void MainWindow::sendUpdateRequestForRoadData()
-{
-    int timePos = this->timeLineSlider->sliderPosition();
-    emit this->updateRoadPageData(timePos);
-}
-void MainWindow::sendUpdateRequestForWeatherData()
-{
-    int timePos = this->timeLineSliderWP->sliderPosition();
-    emit this->updateWeatherPageData(timePos);
+    QObject* slider = QObject::sender();
+    int value;
+//Update the timeline label for which evber slider send it
+    std::cout << "got here" << std::endl;
+    if(slider == this->timeLineSlider) value= this->timeLineSlider->value();
+    if(slider == this->timeLineSliderWP) value = this->timeLineSliderWP->value();
+
+    emit this->updateTimeline(value);
 }
