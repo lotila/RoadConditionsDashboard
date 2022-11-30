@@ -237,7 +237,7 @@ void MainWindow::sendUpdateRequestForRoadData()
 
 void MainWindow::setWeatherIcons()
 {
-
+    /*
     QPixmap sun(":/images/sun.png");
     this->sunIcon_->setPixmap(sun);
     this->sunIcon_->setScaledContents(true);
@@ -263,42 +263,46 @@ void MainWindow::setWeatherIcons()
     this->windIcon_->setScaledContents(true);
     this->windIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     this->windIcon_->show();
+    */
 
-    /*
-    if(sunny) {
+
+    if(model->weather->getCurrentCloudiness() < 0.6) {
         QPixmap sun(":/images/sun.png");
         this->sunIcon_->setPixmap(sun);
         this->sunIcon_->setScaledContents(true);
         this->sunIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         this->sunIcon_->show();
     }
-    if(cloudy) {
+    if(model->weather->getCurrentCloudiness() > 0.5) {
         QPixmap cloud(":/images/cloud.png");
         this->cloudIcon_->setPixmap(cloud);
         this->cloudIcon_->setScaledContents(true);
         this->cloudIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         this->cloudIcon_->show();
     }
-    if(rainy) {
+    if(model->weather->getCurrentRain() > 0.5 and model->weather->getCurrentTemperature() < 0) {
+
+        // Ilmatieteen laitoksen mukaan vähän sadetta 0.3 - 0.9, sadetta 1 - 4.4 ja runsasta >4.5
+
         QPixmap rain(":/images/rain.png");
         this->rainIcon_->setPixmap(rain);
         this->rainIcon_->setScaledContents(true);
         this->rainIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         this->rainIcon_->show();
     }
-    if(snowy) {
+    if(model->weather->getCurrentTemperature() <= 0) {
         QPixmap snow(":/images/snow.png");
         this->snowIcon_->setPixmap(snow);
         this->snowIcon_->setScaledContents(true);
         this->snowIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         this->snowIcon_->show();
     }
-    if(windy) {
+    if(model->weather->getCurrentWind() > 3) {
         QPixmap wind(":/images/wind.png");
         this->windIcon_->setPixmap(wind);
         this->windIcon_->setScaledContents(true);
         this->windIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         this->windIcon_->show();
     }
-    */
+
 }

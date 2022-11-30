@@ -208,6 +208,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -237,6 +246,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -263,6 +281,15 @@ background-color: rgb(255, 255, 255);</string>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -877,6 +904,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -906,6 +942,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -932,6 +977,15 @@ background-color: rgb(255, 255, 255);</string>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -2193,6 +2247,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -2222,6 +2285,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -2248,6 +2320,15 @@ background-color: rgb(255, 255, 255);</string>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -2492,7 +2573,7 @@ background-color: rgb(255, 255, 255);</string>
          <string notr="true">background-color: rgba(0,0,0,0%)</string>
         </property>
         <property name="text">
-         <string>&lt;sun&gt;</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2553,7 +2634,7 @@ background-color: rgb(255, 255, 255);</string>
          <string notr="true">background-color: rgba(0,0,0,0%)</string>
         </property>
         <property name="text">
-         <string>&lt;rain&gt;</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2572,7 +2653,7 @@ background-color: rgb(255, 255, 255);</string>
          <string notr="true">background-color: rgba(0,0,0,0%)</string>
         </property>
         <property name="text">
-         <string>&lt;snö&gt;</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2591,7 +2672,7 @@ background-color: rgb(255, 255, 255);</string>
          <string notr="true">background-color: rgba(0,0,0,0%)</string>
         </property>
         <property name="text">
-         <string>&lt;wind&gt;</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -2610,7 +2691,7 @@ background-color: rgb(255, 255, 255);</string>
          <string notr="true">background-color: rgba(0,0,0,0%)</string>
         </property>
         <property name="text">
-         <string>&lt;cloud&gt;</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -3093,6 +3174,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -3122,6 +3212,15 @@ background-color: rgb(255, 255, 255);</string>
            </color>
           </brush>
          </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
          <colorrole role="Window">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -3148,6 +3247,15 @@ background-color: rgb(255, 255, 255);</string>
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
