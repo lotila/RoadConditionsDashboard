@@ -6,7 +6,8 @@
 #include "lib/timeStamp.h"
 
 #include <iostream>
-
+#include <algorithm>
+#include<string>
 bool listIsNearToPoint(const nlohmann::json& list, const util::Coord& point)
 {
     float distanceToStart = point.distance(
@@ -125,3 +126,33 @@ std::vector<util::TimeValuePair> digitraffigParser::parseTrafficMessageCount(
 
     return result;
 }
+std::vector<util::TimeValuePair> digitraffigParser::parseRoadCondition(const std::string &input)
+{
+    nlohmann::json data = nlohmann::json::parse(input);
+    const nlohmann::json& recent_data = data.at(-1); //get the most recent observation+forecast
+    std::vector<util::TimeValuePair> result;
+
+    auto getData = [](nlohmann::json obj)
+    {
+        float condition;
+        //RoadCOndition maps to 4 differest values:
+        if(obj.at("overallRoadCondition") == "NORMAL_CONDITION") condition = 3;
+        if(obj.at("overallRoadCondition") == "POOR_CONDITION") condition = 2;
+        if(obj.at("overallRoadCondition") == "EXTREMELY_POOR_CONDITION") condition = 1;
+        if(obj.at("overallRoadCondition") == "CODITION_COULD_NOT_BE_RESOLVED") condition = 0;
+
+        std::string timeString = obj.at("forecastName");
+        timeString.erase(timeString.end()); //removing th h from the end of the string
+
+        int timevalue = stoi(timeString);
+        return util::TimeValuePair({timevalue, condition});
+    };
+
+    for(const nlohmann::json& j : recent_data.at("roadConditions"))
+    {
+        result.push_back(getData(j));
+    }
+
+    return result;
+}
+
