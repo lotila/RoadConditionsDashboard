@@ -30,7 +30,13 @@ void RoadCondition::updateRoadCondition(const util::Coord &coord)
     std::string apiResponse;
     APIClient::getDigitrafficAPIData(&apiResponse, path, query);
 
-    this->roadcondition = digitraffigParser::parseRoadCondition(apiResponse);
+    std::vector<util::TimeValuePair> roadConditionVals = digitraffigParser::parseRoadCondition(apiResponse);
+    std::vector<util::TimeValuePair> frictionVals = digitraffigParser::parseRoadFriction(apiResponse);
+    std::vector<util::TimeValuePair> visibilityVals = digitraffigParser::parseRoadVisibility(apiResponse);
+
+    this->roadcondition = roadConditionVals;
+    this->friction = frictionVals;
+    this->visibility = visibilityVals;
 }
 
 util::TimeSeries RoadCondition::getFriction() const

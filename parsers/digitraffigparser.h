@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 namespace digitraffigParser
 {
@@ -18,6 +19,8 @@ std::vector<util::TimeValuePair> parseTrafficMessageCount(
 
 
 std::vector<util::TimeValuePair> parseRoadCondition(const std::string& input);
+std::vector<util::TimeValuePair> parseRoadFriction(const std::string& input);
+std::vector<util::TimeValuePair> parseRoadVisibility(const std::string& input);
 }
 
 
