@@ -30,7 +30,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     searchBar = ui.searchWidgetMain;
     sb_ = new SearchBar(searchBar);
 
-    // this->model->roadCondition->updateRoadCondition(util::Coord(sb_.lat, sb_.lon));
+    this->model->roadCondition->updateRoadCondition(util::Coord(61, 24)); // Tampereen koordinaatit
 
 //RoadFrame:
     //Initializing the Buttons for road Preview:
@@ -133,6 +133,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     this->pieChart = new PieChart("", this->ui.maintananceWorkPie, this->model->maintenance->getMaintanance());
 
     connect(ui.searchButton, SIGNAL(pressed()), this, SLOT(sendUpdateRequestForCoordinates()));
+
 }
 
 void MainWindow::updateItem()

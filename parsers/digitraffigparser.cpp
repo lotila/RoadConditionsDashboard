@@ -7,7 +7,8 @@
 
 #include <iostream>
 #include <algorithm>
-#include<string>
+#include <string>
+
 bool listIsNearToPoint(const nlohmann::json& list, const util::Coord& point)
 {
     float distanceToStart = point.distance(
@@ -126,14 +127,46 @@ std::vector<util::TimeValuePair> digitraffigParser::parseTrafficMessageCount(
 
     return result;
 }
-std::vector<util::TimeValuePair> digitraffigParser::parseRoadCondition(const std::string &input)
-{
-    nlohmann::json data = nlohmann::json::parse(input);
-    const nlohmann::json& recent_data = data.at("weatherData").back().at("roadConditions"); //get the most recent observation+forecast
-    std::vector<util::TimeValuePair> result;
 
-    auto getData = [](nlohmann::json obj)
-    {
+util::TimeValuePair getData(nlohmann::json obj, char flag = 'r')
+{
+    if(flag == 'f') { // friction
+        float condition = 0;
+        std::string timeString = obj.at("forecastName");
+        util::TimeValuePair t;
+        t.time = stoi(timeString.substr(0, timeString.back()-1));
+
+        if(obj.find("forecastConditionReason") == obj.end() or
+            obj.at("forecastConditionReason").find("frictionCondition") == obj.at("forecastConditionReason").end()) {
+
+            t.value = condition;
+            return t;
+        }
+
+        if(obj.at("forecastConditionReason").at("frictionCondition") == "SLIPPERY") condition = 1;
+        if(obj.at("forecastConditionReason").at("frictionCondition") == "VERY_SLIPPERY") condition = 2;
+        t.value = condition;
+        return t;
+    }
+    else if(flag == 'v') { // visibility
+        float condition = 0;
+        std::string timeString = obj.at("forecastName");
+        util::TimeValuePair t;
+        t.time = stoi(timeString.substr(0, timeString.back()-1));
+
+        if(obj.find("forecastConditionReason") == obj.end() or
+            obj.at("forecastConditionReason").find("visibilityCondition") == obj.at("forecastConditionReason").end()) {
+
+            t.value = condition;
+            return t;
+        }
+
+        if(obj.at("forecastConditionReason").at("visibilityCondition") == "FAIRLY_POOR") condition = 1;
+        if(obj.at("forecastConditionReason").at("visibilityCondition") == "POOR") condition = 2;
+        t.value = condition;
+        return t;
+    }
+    else {
         float condition;
         //RoadCOndition maps to 4 differest values:
         if(obj.at("overallRoadCondition") == "NORMAL_CONDITION") condition = 3;
@@ -147,11 +180,46 @@ std::vector<util::TimeValuePair> digitraffigParser::parseRoadCondition(const std
         t.time = timevalue;
         t.value = condition;
         return t;
-    };
+    }
+}
+
+std::vector<util::TimeValuePair> digitraffigParser::parseRoadCondition(const std::string &input)
+{
+    nlohmann::json data = nlohmann::json::parse(input);
+    const nlohmann::json& recent_data = data.at("weatherData").back().at("roadConditions"); //get the most recent observation+forecast
+    std::vector<util::TimeValuePair> result;
 
     for(const nlohmann::json& j : recent_data)
     {
         result.push_back(getData(j));
+    }
+
+    return result;
+}
+
+std::vector<util::TimeValuePair> digitraffigParser::parseRoadFriction(const std::string &input)
+{
+    nlohmann::json data = nlohmann::json::parse(input);
+    const nlohmann::json& recent_data = data.at("weatherData").back().at("roadConditions"); //get the most recent observation+forecast
+    std::vector<util::TimeValuePair> result;
+
+    for(const nlohmann::json& j : recent_data)
+    {
+        result.push_back(getData(j, 'f'));
+    }
+
+    return result;
+}
+
+std::vector<util::TimeValuePair> digitraffigParser::parseRoadVisibility(const std::string &input)
+{
+    nlohmann::json data = nlohmann::json::parse(input);
+    const nlohmann::json& recent_data = data.at("weatherData").back().at("roadConditions"); //get the most recent observation+forecast
+    std::vector<util::TimeValuePair> result;
+
+    for(const nlohmann::json& j : recent_data)
+    {
+        result.push_back(getData(j, 'v'));
     }
 
     return result;
