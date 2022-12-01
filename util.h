@@ -36,6 +36,11 @@ struct TimeValuePair
 
 using TimeSeries = std::vector<util::TimeValuePair>;
 
+/**
+ * @brief This exists because std::to_string() is locale dependent.
+ */
+std::string toString(float number);
+
 }
 
 #endif

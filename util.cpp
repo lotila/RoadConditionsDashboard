@@ -1,5 +1,8 @@
 #include "util.h"
 
+#include <locale>
+#include <sstream>
+
 namespace util
 {
 
@@ -23,6 +26,14 @@ float Coord::distance(const Coord &other) const
     float latDistance = this->lat - other.lat;
     float lonDistance = this->lon - other.lon;
     return std::sqrt(std::pow(latDistance, 2) + std::pow(lonDistance, 2));
+}
+
+std::string toString(float number)
+{
+    std::ostringstream stream;
+    stream.imbue(std::locale::classic());
+    stream << number;
+    return std::string(stream.str());
 }
 
 }
