@@ -225,3 +225,26 @@ std::vector<util::TimeValuePair> digitraffigParser::parseRoadVisibility(const st
     return result;
 }
 
+
+std::unordered_map<std::string, int> digitraffigParser::parseMaintenances(const std::string &input)
+{
+    std::unordered_map<std::string, int>  result;
+
+    nlohmann::json data = nlohmann::json::parse(input);
+    for (const nlohmann::json& feature : data.at("features"))
+    {
+        for (const nlohmann::json& taskAsJson : feature.at("properties").at("tasks"))
+        {
+            std::string task = taskAsJson.get<std::string>();
+            if (result.count(task) == 0)
+            {
+                result.insert({task, 0});
+            }
+
+            ++result.at(task);
+        }
+    }
+    std::cout << data.at("features").size() << std::endl;
+
+    return result;
+}
