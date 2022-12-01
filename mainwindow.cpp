@@ -10,7 +10,6 @@
 #include <unordered_map>
 
 
-
 MainWindow::MainWindow(Model* model, QWidget* parent) :
     QWidget(parent), model(model)
 {
@@ -30,7 +29,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     // Setting up the search bar
     this->ui.searchBar->setPlaceholderText("Search by coordinates. Separate "
                                            "latitude and longitude with comma."
-                                               "For example, Tampere is '61.4981,23.7608'");
+                                           "For example, Tampere is '61.4981,23.7608'");
 
 
 //RoadFrame:
@@ -43,12 +42,11 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(prevButton_, SIGNAL(clicked()), this, SLOT(updateCard()));
 
     //Initializing cards:
-    this->cards_ = {"Friction", "Roadcondition", "Visibility",}; //Currntly this is the DATA tells the card headers and amount of cards to be created
+    this->cards_ = {"Friction", "Roadcondition", "Visibility",}; //Currently this is the DATA tells the card headers and amount of cards to be created
     this->index_ = 0; //Setting the current card(index 0)
     this->cardcontainer_ = {};
     createCards();
 
-    //this->cardStackWidget->setCurrentIndex(index_);
     this->cardStackWidget->setCurrentWidget(cardcontainer_.at(index_));
 
 //WeatherFrame:
@@ -76,7 +74,7 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     connect(this->ui.frictionCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
     connect(this->ui.windCheckboxRoadPage, SIGNAL(stateChanged(int)), this, SLOT(updateRoadDataChart()));
 
-//Connections for ButBtons in GUI:
+//Connections for Buttons in GUI:
 
     //Initialize chart setting elements:
     this->timeLineSlider = this->ui.timeLineSlider;
@@ -215,8 +213,10 @@ void MainWindow::updateRoadDataChart()
     if (ui.trafficMsgCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("traffic messages" ,model->trafficMessages->getTrafficMessageCount());
     if (ui.frictionCheckboxRoadPage->isChecked()) this->roadDataChart->newPlot("friction" ,model->roadCondition->getFriction());
 }
+
+//Here we should draw the charts again
 void MainWindow::updateView()
-{ //Here we should draw the charts again
+{
 
 
 }
@@ -270,35 +270,6 @@ void MainWindow::sendUpdateRequestForCoordinates()
 
 void MainWindow::setWeatherIcons()
 {
-    /*
-    QPixmap sun(":/images/sun.png");
-    this->sunIcon_->setPixmap(sun);
-    this->sunIcon_->setScaledContents(true);
-    this->sunIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    this->sunIcon_->show();
-    QPixmap cloud(":/images/cloud.png");
-    this->cloudIcon_->setPixmap(cloud);
-    this->cloudIcon_->setScaledContents(true);
-    this->cloudIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    this->cloudIcon_->show();
-    QPixmap rain(":/images/rain.png");
-    this->rainIcon_->setPixmap(rain);
-    this->rainIcon_->setScaledContents(true);
-    this->rainIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    this->rainIcon_->show();
-    QPixmap snow(":/images/snow.png");
-    this->snowIcon_->setPixmap(snow);
-    this->snowIcon_->setScaledContents(true);
-    this->snowIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    this->snowIcon_->show();
-    QPixmap wind(":/images/wind.png");
-    this->windIcon_->setPixmap(wind);
-    this->windIcon_->setScaledContents(true);
-    this->windIcon_->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    this->windIcon_->show();
-    */
-
-
     if(model->weather->getCurrentCloudiness() < 0.6) {
         QPixmap sun(":/images/sun.png");
         this->sunIcon_->setPixmap(sun);
@@ -339,6 +310,7 @@ void MainWindow::setWeatherIcons()
     }
 
 }
+
 util::Coord MainWindow::getCoordinates()
 {
     std::string searchInput = this->ui.searchBar->toPlainText().toStdString();
@@ -357,4 +329,3 @@ util::Coord MainWindow::getCoordinates()
     }
     return result;
 }
-
