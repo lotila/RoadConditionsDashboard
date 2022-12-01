@@ -41,7 +41,7 @@ void Controller::updateModelTimeline(int timeValue)
 void Controller::updateModelCoordinates(util::Coord newCoord)
 {//Function for updating the model coordinates
 
-    std::cout << "current COORD is " <<  newCoord.lat << std::endl;
+    std::cout << "current COORD is " <<  newCoord.lat << " " << newCoord.lon << std::endl;
     //TODO: UPDate the model coordinates:
 
     emit this->updateModelTimelineFinished();

@@ -2,7 +2,6 @@
 #define CUSTOMWIDGET_H
 
 #include "model.h"
-#include "searchbar.h"
 #include "ui_mainwindow.h"
 #include "linechart.h"
 #include "piechart.h"
@@ -16,6 +15,8 @@ public:
     explicit MainWindow(Model* model, QWidget *parent = 0);
     void updateRoadPreview();
     void setWeatherIcons();
+
+    util::Coord getCoordinates();
 
 public slots:
     void updateItem();
@@ -86,9 +87,6 @@ private:
         QSlider* timeLineSliderWP;
         QLabel* timeLineLabelWP;
 
-// Search bar
-    QWidget* searchBar;
-    SearchBar* sb_;
 };
 
 #endif
