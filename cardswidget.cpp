@@ -1,7 +1,28 @@
 #include "cardswidget.h"
 #include "ui_cardswidget.h"
-#include <iostream>
 #include "linechart.h"
+
+#include <iostream>
+#include <unordered_map>
+
+const std::unordered_map<float, QString> FRICTIONVALUES = {
+    {0, "Normal condition"},
+    {1, "Very slippery"},
+    {2, "Slippery"}
+};
+
+const std::unordered_map<float, QString> VISIBILITYVALUES = {
+    {0, "Normal condition"},
+    {1, "Very poor"},
+    {2, "Poor"}
+};
+
+const std::unordered_map<float, QString> CONDITIONVALUES = {
+    {0, "Condition could not be resolved"},
+    {1, "Extremely poor condition"},
+    {2, "Poor condition"},
+    {3, "Normal condition"}
+};
 
 CardsWidget::CardsWidget(QWidget *parent) :
     QFrame(parent)
@@ -69,21 +90,22 @@ void CardsWidget::updateCardInfo()
     {
         this->cardChart->newPlot("" ,model->roadCondition->getFriction());
         value = model->roadCondition->getCurrentFriction();
+        this->nowValueLabel_->setText(FRICTIONVALUES.at(value)); //Set the value of the card
     }
     else if (this->text == "Roadcondition")
     {
         this->cardChart->newPlot("" ,model->roadCondition->getRoadcondition());
         value = model->roadCondition->getCurrentRoadcondition();
+        this->nowValueLabel_->setText(CONDITIONVALUES.at(value));
     }
     else if (this->text == "Visibility")
     {
         this->cardChart->newPlot("" ,model->roadCondition->getVisibility());
         value = model->roadCondition->getCurrentVisibility();
+        this->nowValueLabel_->setText(VISIBILITYVALUES.at(value));
     }
 
-    QString StringValue = QString::number(value); //Change the val to Qstring
     this->nowLabel_->setText(this->text + " Now"); //Set header for the Now card
-    this->nowValueLabel_->setText(StringValue + "%"); //Set the value of the card
 }
 
 CardsWidget::~CardsWidget()
