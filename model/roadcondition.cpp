@@ -12,9 +12,7 @@ RoadCondition::RoadCondition()
 {
 
     // test data
-    this->friction.push_back({1,1}); this->friction.push_back({2,1});
-    this->roadcondition.push_back({1,18}); this->roadcondition.push_back({2,18});
-    this->visibility.push_back({1,60}); this->visibility.push_back({2,60});
+    this->updateRoadCondition(util::Coord(61, 24)); // Tampereen koordinaatit
 }
 
 void RoadCondition::updateRoadCondition(const util::Coord &coord)
