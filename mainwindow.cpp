@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "model.h"
 #include "cardswidget.h"
-#include "searchbar.h"
 #include "ui_mainwindow.h"
 
 #include <QtWidgets>
@@ -9,6 +8,8 @@
 #include <string>
 #include <qwidget.h>
 #include <unordered_map>
+
+
 
 MainWindow::MainWindow(Model* model, QWidget* parent) :
     QWidget(parent), model(model)
@@ -27,10 +28,10 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     ui.stackedWidget->setCurrentWidget(mainpage);
 
     // Setting up the search bar
-    searchBar = ui.searchWidgetMain;
-    sb_ = new SearchBar(searchBar);
+    this->ui.searchBar->setPlaceholderText("Search by coordinates. Separate "
+                                           "latitude and longitude with comma."
+                                               "For example, Tampere is '61.4981,23.7608'");
 
-    this->model->roadCondition->updateRoadCondition(util::Coord(61, 24)); // Tampereen koordinaatit
 
 //RoadFrame:
     //Initializing the Buttons for road Preview:
@@ -263,7 +264,7 @@ void MainWindow::sendUpdateRequestForTimeline()
 }
 void MainWindow::sendUpdateRequestForCoordinates()
 {
-    util::Coord newCoords = {22, 44}; //this->sb_->getCoordinates(); TODO: use sb methods
+    util::Coord newCoords = this->getCoordinates();
     emit this->updateCoordinates(newCoords);
 }
 
@@ -338,3 +339,22 @@ void MainWindow::setWeatherIcons()
     }
 
 }
+util::Coord MainWindow::getCoordinates()
+{
+    std::string searchInput = this->ui.searchBar->toPlainText().toStdString();
+
+    std::string latitude = searchInput.substr(0, searchInput.find(','));
+    std::string longitude = searchInput.substr(1 + searchInput.find(','), searchInput.size());
+
+    util::Coord result = {0,0};
+    try {
+        result = util::Coord(std::stof(latitude), std::stof(longitude));
+    }
+    catch (...) {
+        ui.searchBar->setPlaceholderText("Syntax error. Make sure to "
+                                         "separate latitude and longitude with comma."
+                                         " For example, Tampere is '61.4981,23.7608'");
+    }
+    return result;
+}
+
