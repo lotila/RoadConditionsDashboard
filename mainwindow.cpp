@@ -211,6 +211,7 @@ void MainWindow::updateView()
     updateCardInfo();
     updateRoadDataChart();
     updateWeatherData();
+    updateWeatherIcons();
 
 }
 
@@ -348,8 +349,57 @@ void MainWindow::setMainWindowWeatherIcons()
         ui.windIcon_4->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
         ui.windIcon_4->show();
     }
-
 }
+
+void MainWindow::updateWeatherIcons()
+{
+    if(model->weather->getCurrentCloudiness() < 0.6) {
+        this->sunIcon_->show();
+        ui.sunIcon_4->show();
+    }
+    else
+    {
+         this->sunIcon_->hide();
+         ui.sunIcon_4->hide();
+    }
+    if(model->weather->getCurrentCloudiness() > 0.5) {
+        ui.cloudIcon_4->show();
+        this->cloudIcon_->show();
+    }
+    else
+    {
+        ui.cloudIcon_4->hide();
+        this->cloudIcon_->hide();
+    }
+    if(model->weather->getCurrentRain() > 0.5 and model->weather->getCurrentTemperature() < 0) {
+        ui.rainIcon_5->show();
+         this->rainIcon_->show();
+    }
+    else
+    {
+        ui.rainIcon_5->hide();
+         this->rainIcon_->hide();
+    }
+    if(model->weather->getCurrentTemperature() <= 0) {
+        ui.snowIcon_4->show();
+        this->snowIcon_->show();
+    }
+    else
+    {
+        ui.snowIcon_4->hide();
+        this->snowIcon_->hide();
+    }
+    if(model->weather->getCurrentWind() > 3) {
+        ui.windIcon_4->show();
+        this->windIcon_->show();
+    }
+    else
+    {
+        ui.windIcon_4->hide();
+        this->windIcon_->hide();
+    }
+}
+
 util::Coord MainWindow::getCoordinates()
 {
     std::string searchInput = this->ui.searchBar->toPlainText().toStdString();

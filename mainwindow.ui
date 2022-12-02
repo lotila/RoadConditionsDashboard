@@ -372,7 +372,7 @@ background-color: rgb(255, 255, 255);</string>
       <widget class="QLabel" name="snowIcon_4">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>170</x>
          <y>150</y>
          <width>71</width>
          <height>61</height>
@@ -3003,7 +3003,7 @@ background-color: rgb(255, 255, 255);</string>
      <rect>
       <x>150</x>
       <y>10</y>
-      <width>751</width>
+      <width>871</width>
       <height>31</height>
      </rect>
     </property>

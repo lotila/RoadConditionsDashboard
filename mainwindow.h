@@ -16,6 +16,7 @@ public:
     void updateRoadPreview();
     void setWeatherIcons();
     void setMainWindowWeatherIcons();
+    void updateWeatherIcons();
 
     util::Coord getCoordinates();
 
