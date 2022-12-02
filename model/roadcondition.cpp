@@ -2,6 +2,7 @@
 
 #include "APIC/apiclient.h"
 #include "parsers/digitraffigparser.h"
+#include "util.h"
 
 #include <iostream>
 
@@ -10,23 +11,20 @@ namespace models
 
 RoadCondition::RoadCondition()
 {
-
-    // test data
-    this->updateRoadCondition(util::Coord(61, 24)); // Tampereen koordinaatit
+    // Some initial data
+    this->updateRoadCondition(util::Coord(61.45152, 23.84765)); // AlePub Potti
 }
 
 void RoadCondition::updateRoadCondition(const util::Coord &coord)
 {
-    // Tällä samalla vois hakea myös friction ja visibility
-
-    std::string path = "v3/data/road-conditions/";
-    std::string query =   std::to_string(coord.lon - util::NEARINDEGREES) + "/"
-                        + std::to_string(coord.lat - util::NEARINDEGREES) + "/"
-                        + std::to_string(coord.lon + util::NEARINDEGREES) + "/"
-                        + std::to_string(coord.lat + util::NEARINDEGREES) + "/";
+    std::string path = "v3/data/road-conditions/"
+            + util::toString(coord.lon - util::NEARINDEGREES) + "/"
+            + util::toString(coord.lat - util::NEARINDEGREES) + "/"
+            + util::toString(coord.lon + util::NEARINDEGREES) + "/"
+            + util::toString(coord.lat + util::NEARINDEGREES) + "/";
 
     std::string apiResponse;
-    APIClient::getDigitrafficAPIData(&apiResponse, path, query);
+    APIClient::getDigitrafficAPIData(&apiResponse, path, "");
 
     std::vector<util::TimeValuePair> roadConditionVals = digitraffigParser::parseRoadCondition(apiResponse);
     std::vector<util::TimeValuePair> frictionVals = digitraffigParser::parseRoadFriction(apiResponse);
