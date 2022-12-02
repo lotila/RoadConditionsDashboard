@@ -14,6 +14,7 @@ public:
     void formTimeSlot(int); //Should this be private?
 
     void updateWeatherIcon();
+    void updateModel(util::Coord, util::TimeSlot);
 
 signals:
     void buttonClickFinished();
@@ -28,7 +29,6 @@ private:
     Model* model;
     MainWindow* widget;
     util::TimeSlot currentTimeSlot;
-    util::Coord* currentCoordinates;
 };
 
 #endif

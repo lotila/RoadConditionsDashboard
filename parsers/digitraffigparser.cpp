@@ -244,7 +244,5 @@ std::unordered_map<std::string, int> digitraffigParser::parseMaintenances(const 
             ++result.at(task);
         }
     }
-    std::cout << data.at("features").size() << std::endl;
-
     return result;
 }

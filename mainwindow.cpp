@@ -30,7 +30,6 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     this->ui.searchBar->setPlaceholderText("Search by coordinates. Separate "
                                            "latitude and longitude with comma."
                                            "For example, Tampere is '61.4981,23.7608'");
-
 //RoadFrame:
     //Initializing the Buttons for road Preview:
     this->nextButton_ = ui.nextButton_road;
@@ -212,7 +211,6 @@ void MainWindow::updateView()
     updateRoadDataChart();
     updateWeatherData();
     updateWeatherIcons();
-
 }
 
 void MainWindow::updateWeatherChartData()
@@ -407,7 +405,7 @@ util::Coord MainWindow::getCoordinates()
     std::string latitude = searchInput.substr(0, searchInput.find(','));
     std::string longitude = searchInput.substr(1 + searchInput.find(','), searchInput.size());
 
-    util::Coord result = {0,0};
+    util::Coord result = {61.45152, 23.84765}; //Default value AlePub Potti Tamp
     try {
         result = util::Coord(std::stof(latitude), std::stof(longitude));
     }
