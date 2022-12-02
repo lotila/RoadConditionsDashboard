@@ -42,7 +42,6 @@ std::string Weather::createObservationsQuery(WEATHER_PARAMETER parameter, const 
             + util::toString(coord.lat - util::NEARINDEGREES) + ","
             + util::toString(coord.lon + util::NEARINDEGREES) + ","
             + util::toString(coord.lat + util::NEARINDEGREES) + "&"
-           "latlon=" + std::to_string(coord.lat) + "," + std::to_string(coord.lon) + "&"
            "parameters=" + weatherParameterToString.at(parameter) + "&";
 }
 
@@ -90,10 +89,23 @@ util::TimeSeries Weather::genericUpdate(WEATHER_PARAMETER parameter, const util:
     return result;
 }
 
+void Weather::genericCurrentValueUpdate(WEATHER_PARAMETER parameter, const util::Coord &coord)
+{
+
+    util::TimeSlot forecastTimeSlot = {0, 1};
+    std::string query = createForecastQuery(parameter, coord, forecastTimeSlot);
+    std::string apiResponse;
+    APIClient::getFMIAPIData(&apiResponse, query);
+
+    util::TimeSeries result = FMIParser::temperatureForecast(apiResponse, forecastTimeSlot);
+    this->currentValues.at(parameter) = result.front().value;
+}
+
 void Weather::updateTemperature(const util::Coord &coord, const util::TimeSlot &timeSlot)
 {
     this->temperature.clear();
     this->temperature = this->genericUpdate(WEATHER_PARAMETER::TEMPERATURE, coord, timeSlot);
+    this->genericCurrentValueUpdate(WEATHER_PARAMETER::TEMPERATURE, coord);
 
     // Calculations
     util::TimeSeries::iterator result = std::max_element(this->temperature.begin(), this->temperature.end());
@@ -108,7 +120,6 @@ void Weather::updateTemperature(const util::Coord &coord, const util::TimeSlot &
         sum += pair.value;
     }
     this->averageTemp = sum / this->temperature.size();
-
 }
 
 util::TimeSeries Weather::getTemperature() const
@@ -118,12 +129,7 @@ util::TimeSeries Weather::getTemperature() const
 
 float Weather::getCurrentTemperature() const
 {
-    if (this->temperature.empty())
-    {
-        std::cerr << "No temperature data" << std::endl;
-        return 0;
-    }
-    return this->temperature.front().value;
+    return this->currentValues.at(WEATHER_PARAMETER::TEMPERATURE);
 }
 
 float Weather::getAverageTemp() const
@@ -145,6 +151,7 @@ void Weather::updateWind(const util::Coord &coord, const util::TimeSlot &timeSlo
 {
     this->wind.clear();
     this->wind = this->genericUpdate(WEATHER_PARAMETER::WIND, coord, timeSlot);
+    this->genericCurrentValueUpdate(WEATHER_PARAMETER::WIND, coord);
 }
 
 util::TimeSeries Weather::getWind() const
@@ -154,18 +161,14 @@ util::TimeSeries Weather::getWind() const
 
 float Weather::getCurrentWind() const
 {
-    if (this->wind.empty())
-    {
-         std::cerr << "No wind data" << std::endl;
-         return 0;
-    }
-    return this->wind.front().value;
+    return this->currentValues.at(WEATHER_PARAMETER::WIND);
 }
 
 void Weather::updateRain(const util::Coord &coord, const util::TimeSlot& timeSlot)
 {
     this->rain.clear();
     this->rain = this->genericUpdate(WEATHER_PARAMETER::RAIN, coord, timeSlot);
+    this->genericCurrentValueUpdate(WEATHER_PARAMETER::RAIN, coord);
 }
 
 util::TimeSeries Weather::getRain() const
@@ -175,18 +178,14 @@ util::TimeSeries Weather::getRain() const
 
 float Weather::getCurrentRain() const
 {
-    if (this->rain.empty())
-    {
-         std::cerr << "No rain data" << std::endl;
-         return 0;
-    }
-    return this->rain.front().value;
+    return this->currentValues.at(WEATHER_PARAMETER::RAIN);
 }
 
 void Weather::updateCloudiness(const util::Coord &coord, const util::TimeSlot& timeSlot)
 {
     this->cloudiness.clear();
     this->cloudiness = this->genericUpdate(WEATHER_PARAMETER::CLOUDINESS, coord, timeSlot);
+    this->genericCurrentValueUpdate(WEATHER_PARAMETER::CLOUDINESS, coord);
 }
 
 util::TimeSeries Weather::getCloudiness() const
@@ -196,12 +195,7 @@ util::TimeSeries Weather::getCloudiness() const
 
 float Weather::getCurrentCloudiness() const
 {
-    if (this->cloudiness.empty())
-    {
-        std::cerr << "No Cloudiness data" << std::endl;
-        return 0;
-    }
-    return this->cloudiness.front().value;
+    return this->currentValues.at(WEATHER_PARAMETER::CLOUDINESS);
 }
 
 

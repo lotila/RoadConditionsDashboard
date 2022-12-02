@@ -48,6 +48,8 @@ private:
 
     util::TimeSeries genericUpdate(WEATHER_PARAMETER parameter, const util::Coord& coord, const util::TimeSlot& timeSlot);
 
+    void genericCurrentValueUpdate(WEATHER_PARAMETER parameter, const util::Coord& coord);
+
     static const std::unordered_map<WEATHER_PARAMETER, std::string> weatherParameterToString;
 
     static std::string createObservationsQuery(WEATHER_PARAMETER parameter, const util::Coord& coord, const util::TimeSlot& timeSlot);
@@ -64,7 +66,13 @@ private:
     float maxTemp;
     float minTemp;
 
-
+    std::unordered_map<WEATHER_PARAMETER, float> currentValues =
+    {
+        {WEATHER_PARAMETER::TEMPERATURE, 0.0},
+        {WEATHER_PARAMETER::WIND, 0.0},
+        {WEATHER_PARAMETER::RAIN, 0.0},
+        {WEATHER_PARAMETER::CLOUDINESS, 0.0},
+    };
 };
 
 }
