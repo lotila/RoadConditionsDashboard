@@ -48,11 +48,6 @@ void Maintenance::updateMaintenance(const util::Coord &coord, const util::TimeSl
     this->data = digitraffigParser::parseMaintenances(apiResponse);
 }
 
-void Maintenance::updateMaintenance()
-{
-    this->updateMaintenance({61.4992, 23.7701}, {-5, 0});
-}
-
 std::unordered_map<std::string, int> Maintenance::getMaintanance()
 {
     //this->updateMaintenance();  // TODO: this is test, remove
