@@ -15,8 +15,8 @@ class Weather
 public:
     Weather();
     void updateTemperature(const util::Coord& coord, const util::TimeSlot& timeSlot);
-    void updateKeyTemperatures(/*month*/);
     util::TimeSeries getTemperature() const;
+
     float getCurrentTemperature() const;
     float getAverageTemp() const;
     float getMaxTemp() const;
