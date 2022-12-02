@@ -21,9 +21,9 @@ Controller::Controller(Model *model, MainWindow* widget, QObject *parent)
 
 void Controller::buttonClicked()
 {
-    //this->model->weather->updateWind({0, 0}, {1, 2});// test location
     emit this->buttonClickFinished();
 }
+
 void Controller::updateModelTimeline(int timeValue)
 {
     if(timeValue == 0) return; //Dont update model if time is set to 0
