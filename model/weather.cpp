@@ -6,6 +6,7 @@
 #include "util.h"
 
 #include <algorithm>  // min and max of timeseries
+#include <cmath>  // NAN
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -106,6 +107,14 @@ void Weather::updateTemperature(const util::Coord &coord, const util::TimeSlot &
     this->temperature.clear();
     this->temperature = this->genericUpdate(WEATHER_PARAMETER::TEMPERATURE, coord, timeSlot);
     this->genericCurrentValueUpdate(WEATHER_PARAMETER::TEMPERATURE, coord);
+
+    if (this->temperature.empty())
+    {
+        this->maxTemp = NAN;
+        this->minTemp = NAN;
+        this->averageTemp = NAN;
+        return;
+    }
 
     // Calculations
     util::TimeSeries::iterator result = std::max_element(this->temperature.begin(), this->temperature.end());
