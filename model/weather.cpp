@@ -38,10 +38,10 @@ std::string Weather::createObservationsQuery(WEATHER_PARAMETER parameter, const 
            "endtime=" + isoDateHoursFromNow(timeSlot.end) + "&"
            "timestep=60&"
            "&bbox="
-            + std::to_string(coord.lon - util::NEARINDEGREES) + ","
-            + std::to_string(coord.lat - util::NEARINDEGREES) + ","
-            + std::to_string(coord.lon + util::NEARINDEGREES) + ","
-            + std::to_string(coord.lat + util::NEARINDEGREES) + "&"
+            + util::toString(coord.lon - util::NEARINDEGREES) + ","
+            + util::toString(coord.lat - util::NEARINDEGREES) + ","
+            + util::toString(coord.lon + util::NEARINDEGREES) + ","
+            + util::toString(coord.lat + util::NEARINDEGREES) + "&"
            "latlon=" + std::to_string(coord.lat) + "," + std::to_string(coord.lon) + "&"
            "parameters=" + weatherParameterToString.at(parameter) + "&";
 }
@@ -53,7 +53,7 @@ std::string Weather::createForecastQuery(WEATHER_PARAMETER parameter, const util
            "starttime=" + isoDateHoursFromNow(timeSlot.start) + "&"
            "endtime=" + isoDateHoursFromNow(timeSlot.end) + "&"
            "timestep=60&"
-           "latlon=" + std::to_string(coord.lat) + "," + std::to_string(coord.lon) + "&"
+           "latlon=" + util::toString(coord.lat) + "," + util::toString(coord.lon) + "&"
            "parameters=" + weatherParameterToString.at(parameter) + "&";
 }
 
