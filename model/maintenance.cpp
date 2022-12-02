@@ -55,7 +55,7 @@ void Maintenance::updateMaintenance()
 
 std::unordered_map<std::string, int> Maintenance::getMaintanance()
 {
-    this->updateMaintenance();  // TODO: this is test, remove
+    //this->updateMaintenance();  // TODO: this is test, remove
     return this->data;
 }
 

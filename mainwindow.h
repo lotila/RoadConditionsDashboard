@@ -15,6 +15,8 @@ public:
     explicit MainWindow(Model* model, QWidget *parent = 0);
     void updateRoadPreview();
     void setWeatherIcons();
+    void setMainWindowWeatherIcons();
+    void updateWeatherIcons();
 
     util::Coord getCoordinates();
 
@@ -27,6 +29,7 @@ public slots:
     void updateCard();
     void updateCardInfo();
     void updateWeatherData();
+    void updateMainWindowWeather();
 
     void updateRoadDataChart();
     void updateWeatherChartData(); 
@@ -52,7 +55,7 @@ private:
 //WeatherPreview elements:
     QLabel* view;
     QPushButton *button;
-    QPushButton *otherButton;
+
 
     // WeatherPage elements:
     QLabel *sunIcon_;
@@ -60,6 +63,8 @@ private:
     QLabel *windIcon_;
     QLabel *snowIcon_;
     QLabel *rainIcon_;
+
+
 
     LineChart *weatherPageChart_;
 
