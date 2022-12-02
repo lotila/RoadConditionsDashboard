@@ -19,10 +19,13 @@ The software helps users to monitor weather and road conditions in Finland. User
 * Break those rules when necessary
 
 ## Dependencies
+
+Please use Linux machine to build and run this software to avoid problems. Althought this have been developed with Windows also.
+
 ### Tools
 
 * cmake 3.16 or higher
-* proper compiler (GCC 9.4 and MSVC)
+* proper compiler (GCC and MinGW used during development)
 
 ### Libs
 
@@ -49,4 +52,6 @@ make RoadConditionsDashboard
 # test
 ./RoadConditionsDashboard
 ```
+
+Usually qtCreator can build and run this out of the box. 
 
