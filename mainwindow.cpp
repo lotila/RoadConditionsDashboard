@@ -31,7 +31,6 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
                                            "latitude and longitude with comma."
                                            "For example, Tampere is '61.4981,23.7608'");
 
-
 //RoadFrame:
     //Initializing the Buttons for road Preview:
     this->nextButton_ = ui.nextButton_road;
@@ -47,22 +46,14 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     this->cardcontainer_ = {};
     createCards();
 
-    this->cardStackWidget->setCurrentWidget(cardcontainer_.at(index_));
 
-//WeatherFrame:
-    //Old elements to the Weather previewFrame:
-    QFrame *weatherFrame = ui.weather_frame;
-    //Adding the old stuff to the weather frame:
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    this->view = new QLabel(QString::number(this->model->weather->getCurrentWind()));
-    this->view->setAlignment(Qt::AlignCenter);
-    this->view->setStyleSheet("font: 20pt;");
-    layout->addWidget(this->view);
-    this->otherButton = new QPushButton("Update", this);
-    layout->addWidget(this->otherButton);
-    weatherFrame->setLayout(layout);
-    //Bringing the more button to front:
-    ui.moreButton_weather->raise();
+
+//Weather mainWindow Frame:
+    updateMainWindowWeather();
+    this->cardStackWidget->setCurrentWidget(cardcontainer_.at(index_));
+    connect(ui.otherButton, SIGNAL(clicked()), this, SLOT(sendUpdateRequestForCoordinates()));
+    setMainWindowWeatherIcons();
+
 
 //RoadPage:
     this->roadDataChart = new LineChart("", ui.roadChartWidget);
@@ -123,7 +114,6 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     setWeatherIcons();
 
 //Connections for Buttons in GUI:
-    connect(this->otherButton, SIGNAL(clicked()), this, SIGNAL(itemClicked()));
     connect(ui.moreButton_road, SIGNAL(clicked()), this, SLOT(switchToRoadPage()));
     connect(ui.moreButton_weather, SIGNAL(clicked()), this, SLOT(switchToWeatherPage()));
     connect(ui.homeButton_road, SIGNAL(clicked()), this, SLOT(switchToMainPage()));
@@ -217,7 +207,11 @@ void MainWindow::updateRoadDataChart()
 //Here we should draw the charts again
 void MainWindow::updateView()
 {
-
+    updateMainWindowWeather();
+    updateCardInfo();
+    updateRoadDataChart();
+    updateWeatherData();
+    updateWeatherIcons();
 
 }
 
@@ -244,6 +238,13 @@ void MainWindow::updateWeatherData()
     ui.maxTempLcd->display(model->weather->getMaxTemp());
     ui.minTempLcd->display(model->weather->getMinTemp());
     ui.dailyAvgLcd->display(model->weather->getAverageTemp());
+    }
+
+void MainWindow::updateMainWindowWeather()
+    {
+    ui.lcdNumber_7->display(model->weather->getCurrentTemperature());
+    ui.lcdNumber_9->display(model->weather->getCurrentWind());
+    ui.lcdNumber_8->display(model->weather->getCurrentRain());
     }
 
 void MainWindow::updateTimeLineLabel(int newValue)
@@ -309,6 +310,94 @@ void MainWindow::setWeatherIcons()
         this->windIcon_->show();
     }
 
+}
+
+void MainWindow::setMainWindowWeatherIcons()
+{
+    if(model->weather->getCurrentCloudiness() < 0.6) {
+        QPixmap sun(":/images/sun.png");
+        ui.sunIcon_4->setPixmap(sun);
+        ui.sunIcon_4->setScaledContents(true);
+        ui.sunIcon_4->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        ui.sunIcon_4->show();
+    }
+    if(model->weather->getCurrentCloudiness() > 0.5) {
+        QPixmap cloud(":/images/cloud.png");
+        ui.cloudIcon_4->setPixmap(cloud);
+        ui.cloudIcon_4->setScaledContents(true);
+        ui.cloudIcon_4->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        ui.cloudIcon_4->show();
+    }
+    if(model->weather->getCurrentRain() > 0.5 and model->weather->getCurrentTemperature() < 0) {
+        QPixmap rain(":/images/rain.png");
+        ui.rainIcon_5->setPixmap(rain);
+        ui.rainIcon_5->setScaledContents(true);
+        ui.rainIcon_5->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        ui.rainIcon_5->show();
+    }
+    if(model->weather->getCurrentTemperature() <= 0) {
+        QPixmap snow(":/images/snow.png");
+        ui.snowIcon_4->setPixmap(snow);
+        ui.snowIcon_4->setScaledContents(true);
+        ui.snowIcon_4->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        ui.snowIcon_4->show();
+    }
+    if(model->weather->getCurrentWind() > 3) {
+        QPixmap wind(":/images/wind.png");
+        ui.windIcon_4->setPixmap(wind);
+        ui.windIcon_4->setScaledContents(true);
+        ui.windIcon_4->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        ui.windIcon_4->show();
+    }
+}
+
+void MainWindow::updateWeatherIcons()
+{
+    if(model->weather->getCurrentCloudiness() < 0.6) {
+        this->sunIcon_->show();
+        ui.sunIcon_4->show();
+    }
+    else
+    {
+         this->sunIcon_->hide();
+         ui.sunIcon_4->hide();
+    }
+    if(model->weather->getCurrentCloudiness() > 0.5) {
+        ui.cloudIcon_4->show();
+        this->cloudIcon_->show();
+    }
+    else
+    {
+        ui.cloudIcon_4->hide();
+        this->cloudIcon_->hide();
+    }
+    if(model->weather->getCurrentRain() > 0.5 and model->weather->getCurrentTemperature() < 0) {
+        ui.rainIcon_5->show();
+         this->rainIcon_->show();
+    }
+    else
+    {
+        ui.rainIcon_5->hide();
+         this->rainIcon_->hide();
+    }
+    if(model->weather->getCurrentTemperature() <= 0) {
+        ui.snowIcon_4->show();
+        this->snowIcon_->show();
+    }
+    else
+    {
+        ui.snowIcon_4->hide();
+        this->snowIcon_->hide();
+    }
+    if(model->weather->getCurrentWind() > 3) {
+        ui.windIcon_4->show();
+        this->windIcon_->show();
+    }
+    else
+    {
+        ui.windIcon_4->hide();
+        this->windIcon_->hide();
+    }
 }
 
 util::Coord MainWindow::getCoordinates()
