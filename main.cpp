@@ -18,22 +18,11 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
     Model model;
-    if (argc > 1 && std::strcmp(argv[1], "--no-gui") == 0)
-    {
-        std::cout << "wind is blowing like: "
-                  << model.weather->getCurrentWind()
-                  << std::endl;
-        APIClient::destructAPIClient();
-        return EXIT_SUCCESS;
-    }
-    else
-    {
-        QApplication app(argc, argv);
-        MainWindow window = MainWindow(&model);
-        Controller controller(&model, &window);
-        window.show();
-        int appStatus = app.exec();
-        APIClient::destructAPIClient();
-        return appStatus;
-    }
+    QApplication app(argc, argv);
+    MainWindow window = MainWindow(&model);
+    Controller controller(&model, &window);
+    window.show();
+    int appStatus = app.exec();
+    APIClient::destructAPIClient();
+    return appStatus;
 }
