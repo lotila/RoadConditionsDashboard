@@ -15,6 +15,8 @@ Controller::Controller(Model *model, MainWindow* widget, QObject *parent)
 
     connect(this->widget, SIGNAL(updateCoordinates(util::Coord)), this, SLOT(updateModelCoordinates(util::Coord)));
     connect(this, SIGNAL(updateModelCoordinatesFinished()), this->widget, SLOT(updateView()));
+
+    formTimeSlot(2); //Set the default time to 2h+
 }
 
 void Controller::buttonClicked()
@@ -33,20 +35,20 @@ void Controller::updateModelTimeline(int timeValue)
     std::cout << "going to update model" << std::endl;
 //TODO: Add the Model Updatefunctions here when they are ready or defined:
     //this->model->weather->updateWind({0, 0}, {1, 2}); // test location
+    util::Coord currentPlace = this->widget->getCoordinates();
+    updateModel(currentPlace, this->currentTimeSlot);
+
 //Send signal when update done:
     emit this->updateModelTimelineFinished();
 }
-
-
 void Controller::updateModelCoordinates(util::Coord newCoord)
 {//Function for updating the model coordinates
 
     std::cout << "current COORD is " <<  newCoord.lat << " " << newCoord.lon << std::endl;
     //TODO: UPDate the model coordinates:
-
-    emit this->updateModelTimelineFinished();
+    updateModel(newCoord, this->currentTimeSlot);
+    emit this->updateModelCoordinatesFinished();
 }
-
 
 void Controller::formTimeSlot(int time)
 {
@@ -59,5 +61,20 @@ void Controller::formTimeSlot(int time)
 
 void Controller::updateWeatherIcon()
 {
+
+}
+
+void Controller::updateModel(util::Coord currentPlace, util::TimeSlot currentTimeSlot)
+{
+    //weather
+    this->model->weather->updateWind(currentPlace, currentTimeSlot);
+    this->model->weather->updateCloudiness(currentPlace, currentTimeSlot);
+    this->model->weather->updateRain(currentPlace, currentTimeSlot);
+    this->model->weather->updateTemperature(currentPlace, currentTimeSlot);
+    //road
+    this->model->roadCondition->updateRoadCondition(currentPlace);
+    //maintenance
+    this->model->maintenance->updateMaintenance(currentPlace, currentTimeSlot);
+    this->model->trafficMessages->updateTrafficMessageCount(currentPlace, currentTimeSlot);
 
 }
