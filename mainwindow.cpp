@@ -409,7 +409,7 @@ util::Coord MainWindow::getCoordinates()
     std::string latitude = searchInput.substr(0, searchInput.find(','));
     std::string longitude = searchInput.substr(1 + searchInput.find(','), searchInput.size());
 
-    util::Coord result = {61.45152, 23.84765}; //Default value AlePub Potti Tamp
+    util::Coord result = {61.45152, 23.84765}; //Default value AlePub Potti
     try {
         result = util::Coord(std::stof(latitude), std::stof(longitude));
     }

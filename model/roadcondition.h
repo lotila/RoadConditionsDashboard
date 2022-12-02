@@ -24,9 +24,7 @@ public:
 
 
 private:
-
     util::TimeSeries friction;
-
 
     util::TimeSeries roadcondition;
 
