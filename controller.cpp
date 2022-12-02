@@ -41,9 +41,10 @@ void Controller::updateModelTimeline(int timeValue)
 //Send signal when update done:
     emit this->updateModelTimelineFinished();
 }
-void Controller::updateModelCoordinates(util::Coord newCoord)
-{//Function for updating the model coordinates
 
+//Function for updating the model coordinates
+void Controller::updateModelCoordinates(util::Coord newCoord)
+{
     std::cout << "current COORD is " <<  newCoord.lat << " " << newCoord.lon << std::endl;
     //TODO: UPDate the model coordinates:
     updateModel(newCoord, this->currentTimeSlot);
@@ -56,7 +57,10 @@ void Controller::formTimeSlot(int time)
     {
         this->currentTimeSlot = {time,0};
     }
-    this->currentTimeSlot = {0,time};
+    else
+    {
+        this->currentTimeSlot = {0,time};
+    }
 }
 
 void Controller::updateWeatherIcon()
