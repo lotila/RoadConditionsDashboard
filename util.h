@@ -32,6 +32,11 @@ struct TimeValuePair
 {
     int time;  // in hours from present
     float value;
+
+    inline bool operator<(const TimeValuePair& other)
+    {
+        return this->value < other.value;
+    }
 };
 
 using TimeSeries = std::vector<util::TimeValuePair>;

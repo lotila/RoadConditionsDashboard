@@ -2037,118 +2037,23 @@ background-color: rgb(255, 255, 255);</string>
         <rect>
          <x>20</x>
          <y>380</y>
-         <width>461</width>
+         <width>451</width>
          <height>261</height>
         </rect>
        </property>
        <property name="title">
-        <string>Monthly Calculations </string>
+        <string>Calculations </string>
        </property>
-       <widget class="QComboBox" name="comboBox">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>60</y>
-          <width>111</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <item>
-         <property name="text">
-          <string/>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>January</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>February</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>March</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>April</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>May</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>June</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>July</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>August</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>September</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>October</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>November</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>December</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QLabel" name="monthLabel">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>30</y>
-          <width>71</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Month:</string>
-        </property>
-       </widget>
        <widget class="QWidget" name="gridLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>150</x>
+          <x>10</x>
           <y>40</y>
-          <width>291</width>
+          <width>431</width>
           <height>201</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QLabel" name="dailyAvgLabel">
-           <property name="text">
-            <string>Daily Average:</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1">
           <widget class="QLCDNumber" name="dailyAvgLcd"/>
          </item>
@@ -2171,6 +2076,13 @@ background-color: rgb(255, 255, 255);</string>
          </item>
          <item row="2" column="1">
           <widget class="QLCDNumber" name="minTempLcd"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="dailyAvgLabel">
+           <property name="text">
+            <string>Daily Average:</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
