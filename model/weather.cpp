@@ -5,6 +5,7 @@
 #include "timeStamp.h"
 #include "util.h"
 
+#include <algorithm>  // min and max of timeseries
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -21,18 +22,11 @@ const std::unordered_map<Weather::WEATHER_PARAMETER, std::string> Weather::weath
 
 Weather::Weather()
 {
-
-
-
     // test data
-
-    wind.push_back({1,15});wind.push_back({2,15});
-    rain.push_back({1,10});rain.push_back({2,10});
-    temperature.push_back({1,5});temperature.push_back({2,5});
-    cloudiness.push_back({1,4});cloudiness.push_back({2,4});
-    this->averageTemp = 5;
-    this->maxTemp = 5;
-    this->minTemp = 5;
+    this->updateWind({60.2, 24.9}, {-12, 24});
+    this->updateRain({60.2, 24.9}, {-12, 24});
+    this->updateCloudiness({60.2, 24.9}, {-12, 24});
+    this->updateTemperature({60.2, 24.9}, {-12, 24});
 }
 
 std::string Weather::createObservationsQuery(WEATHER_PARAMETER parameter, const util::Coord &coord, const util::TimeSlot &timeSlot)
@@ -62,7 +56,6 @@ std::string Weather::createForecastQuery(WEATHER_PARAMETER parameter, const util
            "latlon=" + std::to_string(coord.lat) + "," + std::to_string(coord.lon) + "&"
            "parameters=" + weatherParameterToString.at(parameter) + "&";
 }
-
 
 util::TimeSeries Weather::genericUpdate(WEATHER_PARAMETER parameter, const util::Coord &coord, const util::TimeSlot &timeSlot)
 {
@@ -101,6 +94,21 @@ void Weather::updateTemperature(const util::Coord &coord, const util::TimeSlot &
 {
     this->temperature.clear();
     this->temperature = this->genericUpdate(WEATHER_PARAMETER::TEMPERATURE, coord, timeSlot);
+
+    // Calculations
+    util::TimeSeries::iterator result = std::max_element(this->temperature.begin(), this->temperature.end());
+    this->maxTemp = result->value;
+
+    result = std::min_element(this->temperature.begin(), this->temperature.end());
+    this->minTemp = result->value;
+
+    float sum = 0.0;
+    for (const util::TimeValuePair& pair : this->temperature)
+    {
+        sum += pair.value;
+    }
+    this->averageTemp = sum / this->temperature.size();
+
 }
 
 util::TimeSeries Weather::getTemperature() const
@@ -122,15 +130,16 @@ float Weather::getAverageTemp() const
 {
     return this->averageTemp;
 }
+
 float Weather::getMaxTemp() const
 {
     return this->maxTemp;
 }
+
 float Weather::getMinTemp() const
 {
     return this->minTemp;
 }
-
 
 void Weather::updateWind(const util::Coord &coord, const util::TimeSlot &timeSlot)
 {
@@ -142,6 +151,7 @@ util::TimeSeries Weather::getWind() const
 {
     return this->wind;
 }
+
 float Weather::getCurrentWind() const
 {
     if (this->wind.empty())
