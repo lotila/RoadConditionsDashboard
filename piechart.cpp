@@ -33,9 +33,9 @@ PieChart::PieChart(QString title,  QWidget* layoutWidget,
 
 PieChart::~PieChart()
 {
+    series_->clear();
     chart_->removeAllSeries();
     delete chart_;
-    series_->clear();
     delete chartView_;
 }
 

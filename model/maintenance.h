@@ -22,15 +22,6 @@ public:
      */
     void updateMaintenance(const util::Coord& coord, const util::TimeSlot& timeSlot);
 
-    /**
-     * @brief This is adapter function for View to call until View starts
-     * to send proper coordinate and timeSlot data.
-     *
-     * Those numbers are just for test usage.
-     * This adapter should be removed.
-     */
-    void updateMaintenance();
-
     std::unordered_map<std::string, int> getMaintanance();
 
     class TooLongTimeSlot: std::exception

@@ -1,4 +1,3 @@
-
 #include "chart.h"
 
 
@@ -18,4 +17,3 @@ QLineSeries* Chart::vectorToQLineSeries(std::vector<util::TimeValuePair>& points
     }
     return series;
 }
-

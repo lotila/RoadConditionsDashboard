@@ -211,6 +211,10 @@ void MainWindow::updateView()
     updateRoadDataChart();
     updateWeatherData();
     updateWeatherIcons();
+
+    // Update maintenance data piechart
+    delete this->pieChart;
+    this->pieChart = new PieChart("", this->ui.maintananceWorkPie, this->model->maintenance->getMaintanance());
 }
 
 void MainWindow::updateWeatherChartData()
