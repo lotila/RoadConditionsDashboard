@@ -121,7 +121,6 @@ MainWindow::MainWindow(Model* model, QWidget* parent) :
     this->pieChart = new PieChart("", this->ui.maintananceWorkPie, this->model->maintenance->getMaintanance());
 
     connect(ui.searchButton, SIGNAL(pressed()), this, SLOT(sendUpdateRequestForCoordinates()));
-
 }
 
 void MainWindow::updateItem()
